@@ -2,7 +2,7 @@ title: Surajgaud.GitHub.io
 description: A page about me, my works and interests.
 google_analytics: 
 show_downloads: true
-theme: jekyll-theme-tactile
+theme: time-machine
 
 gems:
   - jekyll-mentions
