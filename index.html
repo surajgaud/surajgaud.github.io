@@ -9,7 +9,7 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             margin: 0;
             padding: 0;
         }
@@ -37,7 +37,7 @@
             text-align: left;
             cursor: pointer;
             outline: none;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-weight: 600;
         }
         .sidenav a:hover, .dropdown-btn:hover {
@@ -45,7 +45,7 @@
         }
         .main {
             margin-left: 200px; 
-            font-size: 28px;
+            font-size: 25px;
             padding: 0px 10px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 700;
@@ -76,13 +76,12 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-container">
-            <a href="https://www.twitter.com/surajgaud_" target="_blank">Twitter</a>
-            <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank">Instagram</a>
             <a href="https://www.linkedin.com/in/surajgaud/" target="_blank">LinkedIn</a>
+            <a href="https://www.twitter.com/surajgaud_" target="_blank">Twitter</a>
             <a href="https://github.com/surajgaud" target="_blank">GitHub</a>
+            <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank">Instagram</a>
             <script>
                 function funcFunction() {
-                    alert("lol, you wish!")
                     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
                 }
                 function contactFunction() { 
@@ -94,8 +93,11 @@
         <a href="javascript:void(0)" class="icon" onclick="contactFunction()" target="_blank">Contact</a>
     </div>
     <div class="main">
-        <h2>Hi! I am Suraj Gaud!</h2>
-        <p>Senior Software Engineer who works on cloud-platform infra, big data, reliability, DevSecOps and everything in between.</p>
+        <h2>Hi! I'm Suraj Gaud</h2>
+        <div class="panel">
+            <p>I am a Senior Software Engineer currently working on all things DevOps, Cloud Infrastucture and everything in between.</p>
+            <p>If you are looking to connect, please feel free to reach out to me on any of the socials listed on the left.</p>
+        </div>
     </div>
     <script>
         var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -114,7 +116,4 @@
         var dropdownValue = document.getElementsByClassName("dropdown-container");
         console.log(dropdownValue);
     </script>
-    <div>
-        <p>© 2018 Suraj Gaud</p>
-    </div>
-</html>
+</body>
