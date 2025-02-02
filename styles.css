@@ -192,7 +192,7 @@ h2 {
     justify-content: space-between;
     align-items: center;
     padding: 20px 0;
-    margin-bottom: 64px;
+    margin-bottom: 32px;
 }
 
 .header-brand {
@@ -218,7 +218,7 @@ h2 {
 
 .hero-section {
     display: block;
-    margin-top: 64px;
+    margin-top: 32px;
 }
 
 .hero-content {

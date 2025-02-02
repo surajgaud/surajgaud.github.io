@@ -72,14 +72,24 @@
             // New: Reach out button functionality
             const reachOutBtn = document.getElementById('reachOutBtn');
             reachOutBtn.addEventListener('click', function() {
-                // Ensure sidenav is visible on mobile
+                // Toggle sidenav on mobile
                 if (window.innerWidth <= 768) {
-                    sidenav.classList.add('active');
-                    sidenav.classList.remove('collapsed');
-                }
-                // Open the dropdown
-                if (!dropdownBtn.classList.contains('active')) {
-                    toggleDropdown();
+                    sidenav.classList.toggle('active');
+                    if (!sidenav.classList.contains('active')) {
+                        // Close dropdown when closing sidenav
+                        dropdownBtn.classList.remove('active');
+                        dropdownContent.style.maxHeight = null;
+                    } else {
+                        // Open the dropdown when opening sidenav
+                        if (!dropdownBtn.classList.contains('active')) {
+                            toggleDropdown();
+                        }
+                    }
+                } else {
+                    // Desktop behavior remains the same
+                    if (!dropdownBtn.classList.contains('active')) {
+                        toggleDropdown();
+                    }
                 }
             });
         });
