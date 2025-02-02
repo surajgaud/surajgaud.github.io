@@ -74,8 +74,8 @@
             reachOutBtn.addEventListener('click', function() {
                 // Ensure sidenav is visible on mobile
                 if (window.innerWidth <= 768) {
-                    sidenav.classList.add('collapsed');
-                    main.classList.add('expanded');
+                    sidenav.classList.add('active');
+                    sidenav.classList.remove('collapsed');
                 }
                 // Open the dropdown
                 if (!dropdownBtn.classList.contains('active')) {
