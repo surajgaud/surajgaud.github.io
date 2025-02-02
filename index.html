@@ -46,6 +46,10 @@
     </div>
 
     <script>
+        // Add these variable declarations at the top
+        const sidenav = document.querySelector('.sidenav');
+        const main = document.querySelector('.main');
+
         // Dropdown functionality
         document.addEventListener('DOMContentLoaded', function() {
             const dropdownBtn = document.querySelector(".dropdown-btn");
@@ -71,7 +75,6 @@
                 // Ensure sidenav is visible on mobile
                 if (window.innerWidth <= 768) {
                     sidenav.classList.remove('collapsed');
-                    hamburger.classList.add('active');
                     main.classList.remove('expanded');
                 }
                 // Open the dropdown
