@@ -18,12 +18,12 @@ body {
     left: 0;
     background-color: #1c2128;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 0;
     transition: transform 0.3s ease;
 }
 
 .nav-item {
-    padding: 8px 16px;
+    padding: 12px 16px;
     text-decoration: none;
     font-size: 14px;
     color: #adbac7;
@@ -33,6 +33,7 @@ body {
     width: 100%;
     text-align: left;
     cursor: pointer;
+    line-height: 1.5;
 }
 
 .sub-item {
@@ -99,7 +100,7 @@ h2 {
 .dropdown-btn {
     width: 100%;
     text-align: left;
-    padding: 8px 16px;
+    padding: 40px 16px;
     background: none;
     border: none;
     color: #adbac7;
@@ -178,20 +179,11 @@ h2 {
     }
 }
 
-.nav-brand {
-    font-size: 24px;
-    font-weight: 600;
-    color: #ffffff;
-    padding: 16px;
-    margin-bottom: 20px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-}
-
 .top-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
+    padding: 12px 0;
     margin-bottom: 32px;
 }
 
