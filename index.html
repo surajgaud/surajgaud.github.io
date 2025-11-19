@@ -1,110 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Suraj Gaud</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Suraj Gaud</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
-    <div class="sidenav" id="mySidenav">
-        <div class="nav-group">
-            <button class="dropdown-btn nav-item">
-                Socials 
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-container">
-                <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="sub-item">LinkedIn</a>
-                <a href="https://www.twitter.com/surajgaud_" target="_blank" class="sub-item">Twitter</a>
-                <a href="https://github.com/surajgaud" target="_blank" class="sub-item">GitHub</a>
-                <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="sub-item">Instagram</a>
-                <script>
-                    function funcFunction() {
-                        window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
-                    }
-                </script>
-                <a href="javascript:void(0)" class="sub-item" onclick="funcFunction()" target="_blank">OnlyFans</a>
-            </div>
-        </div>
+    <!-- Animated Background -->
+    <div class="background-gradients">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
     </div>
 
-    <div class="main">
-        <header class="top-header">
-            <div class="header-brand">Suraj Gaud</div>
-            <button class="reach-out-btn" id="reachOutBtn">Reach out</button>
-        </header>
-        <div class="line"></div>
-        <div class="hero-section">
-            <div class="hero-content">
-                <h1>Hey, I'm Suraj<span class="cursor">_</span></h1>
-                <p class="hero-description">I focus in designing and scaling distributed cloud infrastructure, improving reliability patterns, and building observability tooling for critical product and data platforms.</p>
-                <p>I have been working in the DevSecMLOps space for the past 8+ years and have shipped 4.5+ starred web and mobile applications with multi-million DAU's.</p>
+    <!-- Glass Navbar -->
+    <nav class="navbar">
+        <a href="#" class="brand">Suraj Gaud<span style="color: var(--accent-1)">.</span></a>
+
+    </nav>
+
+    <main class="main-content">
+        <div class="hero-container">
+            <h1>Scaling AI<br>Infrastructure<span class="cursor"></span></h1>
+
+            <div class="hero-description">
+                <p>Building reliable, automated cloud and data platforms.
+                    My expertise spans IaC, CI/CD, and distributed systems,
+                    with a relentless focus on solving complex data quality, product analytics, observability, ML
+                    infrastructure problems and improving developer productivity.</p>
+            </div>
+
+            <div class="social-dock">
+                <a href="mailto:suraj.ug@gmail.com" class="social-icon" title="Email">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="social-icon" title="LinkedIn">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://www.twitter.com/surajgaud_" target="_blank" class="social-icon" title="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="social-icon"
+                    title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/surajgaud" target="_blank" class="social-icon" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="javascript:void(0)" onclick="rickRoll()" class="social-icon" title="OnlyFans">
+                    <i class="fas fa-heart" style="color: #ff0055;"></i>
+                </a>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
-        // Add these variable declarations at the top
-        const sidenav = document.querySelector('.sidenav');
-        const main = document.querySelector('.main');
-
-        // Dropdown functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdownBtn = document.querySelector(".dropdown-btn");
-            const dropdownContent = document.querySelector(".dropdown-container");
-            
-            function toggleDropdown() {
-                dropdownBtn.classList.toggle("active");
-                if (dropdownContent.style.maxHeight) {
-                    dropdownContent.style.maxHeight = null;
-                } else {
-                    dropdownContent.style.maxHeight = dropdownContent.scrollHeight + "px";
-                }
-            }
-
-            dropdownBtn.addEventListener("click", function(e) {
-                e.preventDefault();
-                toggleDropdown();
-            });
-
-            // New: Reach out button functionality
-            const reachOutBtn = document.getElementById('reachOutBtn');
-            reachOutBtn.addEventListener('click', function() {
-                // Toggle sidenav on mobile
-                if (window.innerWidth <= 768) {
-                    sidenav.classList.toggle('active');
-                    if (!sidenav.classList.contains('active')) {
-                        // Close dropdown when closing sidenav
-                        dropdownBtn.classList.remove('active');
-                        dropdownContent.style.maxHeight = null;
-                    } else {
-                        // Open the dropdown when opening sidenav
-                        if (!dropdownBtn.classList.contains('active')) {
-                            toggleDropdown();
-                        }
-                    }
-                } else {
-                    // Desktop behavior remains the same
-                    if (!dropdownBtn.classList.contains('active')) {
-                        toggleDropdown();
-                    }
-                }
-            });
-        });
-
-        // Handle responsive behavior
-        function checkWidth() {
-            if (window.innerWidth <= 768) {
-                sidenav.classList.add('collapsed');
-                main.classList.add('expanded');
-            } else {
-                sidenav.classList.remove('collapsed');
-                main.classList.remove('expanded');
-            }
+        function rickRoll() {
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
         }
-
-        // Check on load and resize
-        window.addEventListener('load', checkWidth);
-        window.addEventListener('resize', checkWidth);
     </script>
 </body>
+
 </html>
