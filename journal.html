@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suraj Gaud</title>
+    <title>Journal | Suraj Gaud</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -19,38 +19,18 @@
 
     <!-- Glass Navbar -->
     <nav class="navbar">
-        <a href="#" class="brand">
+        <a href="index.html" class="brand">
             <span class="brand-text-wrapper">
                 <span class="brand-text-primary">Suraj Gaud</span>
                 <span class="brand-text-secondary">सूरज गौड़</span>
             </span><span style="color: var(--accent-1)">.</span>
         </a>
-
     </nav>
 
-    <main class="main-content">
-        <div class="hero-container">
-            <h1>Hi,<br> I'm Suraj<span class="cursor"></span></h1>
-
-            <div class="hero-description">
-                <p>Currently focussed on building next gen data platform infrastructure that scales for AI and ML.
-                    You'll find me ramble about IaC, distributed systems, monoliths, and/or CI/CD.
-                    I have a deep passion for solving complex data quality, product analytics, observability, ML
-                    infrastructure problems.</p>
-                <br>
-                <p>feel free to reach out through my social dock below, or take a peek at</p>
-                <p><a href="#" onclick="toggleJournal(event)" class="inline-link">what I'm currently reading and
-                        listening to</a>.</p>
-            </div>
-
-        </div>
-
-        <!-- Journal Section (Expandable) -->
-        <div class="journal-expandable" id="journal-section">
-            <div class="journal-container" id="journal-container">
-                <!-- Content will be loaded dynamically -->
-                <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Loading journal...</div>
-            </div>
+    <main class="main-content journal-content">
+        <div class="journal-container" id="journal-container">
+            <!-- Content will be loaded dynamically -->
+            <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Loading journal...</div>
         </div>
     </main>
 
@@ -89,24 +69,6 @@
             brandWrapper.classList.toggle('show-hindi');
         }, 4000);
 
-        // Toggle Journal Section
-        function toggleJournal(event) {
-            event.preventDefault();
-            const journalSection = document.getElementById('journal-section');
-            const isExpanded = journalSection.classList.contains('expanded');
-
-            if (isExpanded) {
-                journalSection.classList.remove('expanded');
-            } else {
-                journalSection.classList.add('expanded');
-                // Load journal content if not already loaded
-                if (!journalSection.dataset.loaded) {
-                    loadJournal();
-                    journalSection.dataset.loaded = 'true';
-                }
-            }
-        }
-
         // Fetch and Parse Journal Data
         async function loadJournal() {
             try {
@@ -129,6 +91,7 @@
             const container = document.getElementById('journal-container');
             container.innerHTML = ''; // Clear loading state
 
+            let currentSection = null;
             let currentMonthDiv = null;
             let currentList = null;
 
@@ -137,18 +100,22 @@
 
                 // H1: Month Title (# Month Year)
                 if (trimmed.startsWith('# ')) {
+                    // Close previous month group if exists
+                    if (currentMonthDiv) container.appendChild(currentSection);
+
                     const monthTitle = trimmed.substring(2);
                     const monthDiv = document.createElement('div');
                     monthDiv.className = 'month-block';
                     monthDiv.style.marginBottom = '60px';
 
                     const titleEl = document.createElement('h2');
-                    titleEl.className = 'section-title';
+                    titleEl.className = 'section-title'; // Reusing style
                     titleEl.textContent = monthTitle;
                     monthDiv.appendChild(titleEl);
 
                     container.appendChild(monthDiv);
                     currentMonthDiv = monthDiv;
+                    currentSection = null; // Reset section context
                 }
                 // H2: Section Title (## Reading / ## Listening)
                 else if (trimmed.startsWith('## ')) {
@@ -158,7 +125,7 @@
                     secDiv.style.marginBottom = '30px';
 
                     const subTitle = document.createElement('h3');
-                    subTitle.className = 'month-title';
+                    subTitle.className = 'month-title'; // Reusing style for subsection header
                     subTitle.style.color = 'var(--text-primary)';
                     subTitle.style.fontSize = '1.2rem';
                     subTitle.textContent = sectionTitle;
@@ -172,12 +139,14 @@
                     if (currentMonthDiv) {
                         currentMonthDiv.appendChild(secDiv);
                     } else {
+                        // Fallback if no month defined yet
                         container.appendChild(secDiv);
                     }
                 }
                 // List Item (- [Title](url) | Meta)
                 else if (trimmed.startsWith('- ')) {
                     if (currentList) {
+                        // Regex to parse: - [Title](link) | Meta
                         const match = trimmed.match(/- \[(.*?)\]\((.*?)\)\s*\|\s*(.*)/);
                         if (match) {
                             const [_, text, url, meta] = match;
@@ -194,6 +163,8 @@
                 }
             });
         }
+
+        window.addEventListener('DOMContentLoaded', loadJournal);
     </script>
 </body>
 

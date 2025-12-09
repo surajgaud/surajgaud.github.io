@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Blog | Suraj Gaud</title>
+    <meta name="description" content="Blog posts and writings">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Marked.js for Markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .blog-post {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-post h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            line-height: 1.2;
+        }
+
+        .blog-post h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .blog-post h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-post p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .blog-post em {
+            font-style: italic;
+        }
+
+        .blog-post a {
+            color: var(--accent-1);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .blog-post a:hover {
+            border-bottom-color: var(--accent-1);
+        }
+
+        .blog-post ul,
+        .blog-post ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        .blog-post li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-post blockquote {
+            border-left: 4px solid var(--accent-1);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .blog-post code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--accent-1);
+        }
+
+        .blog-post pre {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-post pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-secondary);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--accent-1);
+        }
+
+        .back-link i {
+            font-size: 0.85rem;
+        }
+
+        .loading-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 4rem 2rem;
+        }
+
+        .error-state {
+            text-align: center;
+            color: var(--accent-1);
+            padding: 4rem 2rem;
+        }
+
+        .error-state h2 {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="background-gradients">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
+    </div>
+
+    <!-- Glass Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="brand">
+            <span class="brand-text-wrapper">
+                <span class="brand-text-primary">Suraj Gaud</span>
+                <span class="brand-text-secondary">सूरज गौड़</span>
+            </span><span style="color: var(--accent-1)">.</span>
+        </a>
+    </nav>
+
+    <main class="main-content">
+        <div class="blog-post" id="blog-content">
+            <div class="loading-state">
+                <p>Loading blog post...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Social Dock Footer -->
+    <footer class="social-dock-footer">
+        <div class="social-dock">
+            <a href="mailto:suraj.ug@gmail.com" class="social-icon" title="Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="social-icon" title="LinkedIn">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://www.twitter.com/surajgaud_" target="_blank" class="social-icon" title="Twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="social-icon" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://github.com/surajgaud" target="_blank" class="social-icon" title="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="javascript:void(0)" onclick="rickRoll()" class="social-icon" title="OnlyFans">
+                <i class="fas fa-heart" style="color: #ff0055;"></i>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        function rickRoll() {
+            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
+        }
+
+        // Brand Name Animation Loop
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => {
+            brandWrapper.classList.toggle('show-hindi');
+        }, 4000);
+
+        // Get markdown file from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const mdFile = urlParams.get('post');
+
+        if (!mdFile) {
+            document.getElementById('blog-content').innerHTML = `
+                <div class="error-state">
+                    <h2>No blog post specified</h2>
+                    <p>Please provide a post parameter in the URL.</p>
+                    <a href="journal.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Journal
+                    </a>
+                </div>
+            `;
+        } else {
+            loadAndRenderMarkdown(mdFile);
+        }
+
+        async function loadAndRenderMarkdown(filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
+                }
+
+                const markdown = await response.text();
+
+                // Configure marked options
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: true,
+                    mangle: false
+                });
+
+                // Parse markdown to HTML
+                const htmlContent = marked.parse(markdown);
+
+                // Extract title from first H1 for page title
+                const titleMatch = markdown.match(/^#\s+(.+)$/m);
+                if (titleMatch) {
+                    document.getElementById('page-title').textContent = `${titleMatch[1]} | Suraj Gaud`;
+                }
+
+                // Render content with back link
+                document.getElementById('blog-content').innerHTML = `
+                    <a href="journal.html" class="back-link">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Journal
+                    </a>
+                    ${htmlContent}
+                `;
+
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                document.getElementById('blog-content').innerHTML = `
+                    <div class="error-state">
+                        <h2>Failed to load blog post</h2>
+                        <p>${error.message}</p>
+                        <small>File: ${filePath}</small>
+                        <br><br>
+                        <a href="journal.html" class="back-link">
+                            <i class="fas fa-arrow-left"></i>
+                            Back to Journal
+                        </a>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>
