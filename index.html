@@ -19,19 +19,27 @@
 
     <!-- Glass Navbar -->
     <nav class="navbar">
-        <a href="#" class="brand">Suraj Gaud<span style="color: var(--accent-1)">.</span></a>
+        <a href="#" class="brand">
+            <span class="brand-text-wrapper">
+                <span class="brand-text-primary">Suraj Gaud</span>
+                <span class="brand-text-secondary">सूरज गौड़</span>
+            </span><span style="color: var(--accent-1)">.</span>
+        </a>
 
     </nav>
 
     <main class="main-content">
         <div class="hero-container">
-            <h1>Scaling AI<br>Infrastructure<span class="cursor"></span></h1>
+            <h1>Hi,<br> I'm Suraj<span class="cursor"></span></h1>
 
             <div class="hero-description">
-                <p>Building reliable, automated cloud and data platforms.
-                    My expertise spans IaC, CI/CD, and distributed systems,
-                    with a relentless focus on solving complex data quality, product analytics, observability, ML
-                    infrastructure problems and improving developer productivity.</p>
+                <p>Currently focussed on building next gen data platform infrastructure that scales for AI and ML.
+                    You'll find me ramble about IaC, distributed systems, monoliths, and/or CI/CD.
+                    I have a deep passion for solving complex data quality, product analytics, observability, ML
+                    infrastructure problems.</p>
+                <br>
+                <p>Feel free to reach out through my social dock below, also checkout what I'm reading, listening to, ..
+                </p>
             </div>
 
             <div class="social-dock">
@@ -62,6 +70,12 @@
         function rickRoll() {
             window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
         }
+
+        // Brand Name Animation Loop
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => {
+            brandWrapper.classList.toggle('show-hindi');
+        }, 4000);
     </script>
 </body>
 

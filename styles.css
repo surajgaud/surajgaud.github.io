@@ -313,3 +313,40 @@ h1 {
         opacity: 0.2;
     }
 }
+
+/* Brand Text Transition */
+.brand-text-wrapper {
+    display: inline-grid;
+    grid-template-areas: "text";
+    overflow: hidden;
+    vertical-align: bottom;
+}
+
+.brand-text-primary,
+.brand-text-secondary {
+    grid-area: text;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+    font-size: 1.5rem;
+    align-self: center;
+}
+
+.brand-text-primary {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.brand-text-secondary {
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+/* State: Show Hindi */
+.brand-text-wrapper.show-hindi .brand-text-primary {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.brand-text-wrapper.show-hindi .brand-text-secondary {
+    transform: translateY(0);
+    opacity: 1;
+}
