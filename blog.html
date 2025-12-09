@@ -220,9 +220,8 @@
                 <div class="error-state">
                     <h2>No blog post specified</h2>
                     <p>Please provide a post parameter in the URL.</p>
-                    <a href="journal.html" class="back-link">
+                    <a href="index.html" class="back-link">
                         <i class="fas fa-arrow-left"></i>
-                        Back to Journal
                     </a>
                 </div>
             `;
@@ -258,9 +257,8 @@
 
                 // Render content with back link
                 document.getElementById('blog-content').innerHTML = `
-                    <a href="journal.html" class="back-link">
+                    <a href="index.html" class="back-link">
                         <i class="fas fa-arrow-left"></i>
-                        Back to Journal
                     </a>
                     ${htmlContent}
                 `;
@@ -273,9 +271,8 @@
                         <p>${error.message}</p>
                         <small>File: ${filePath}</small>
                         <br><br>
-                        <a href="journal.html" class="back-link">
+                        <a href="index.html" class="back-link">
                             <i class="fas fa-arrow-left"></i>
-                            Back to Journal
                         </a>
                     </div>
                 `;
