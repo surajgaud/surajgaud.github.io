@@ -1,3 +1,12 @@
+# February 2026
+
+## Reading
+- [Designing Data-Intensive Applications](https://dataintensive.net/) | Book
+
+## Listening
+- [Bollywood Workout](https://open.spotify.com/playlist/37i9dQZF1DX3wwp27Epwn5) | Spotify
+
+
 # December 2025
 
 ## Writing
