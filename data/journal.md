@@ -1,7 +1,7 @@
 # March 2026
 
 ## Writing
-- [WSL Setup Guide](blog.html?post=data/wsl_setup_guide.md) | Blog
+- [WSL on 32GB: A Quiet Setup That Just Works](blog.html?post=data/wsl_setup_guide.md) | Blog
 
 ## Reading
 - [Designing Data-Intensive Applications](https://dataintensive.net/) | Book
