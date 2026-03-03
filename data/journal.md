@@ -1,16 +1,7 @@
-# February 2026
-
-## Reading
-- [Designing Data-Intensive Applications](https://dataintensive.net/) | Book
-
-## Listening
-- [Bollywood Workout](https://open.spotify.com/playlist/37i9dQZF1DX3wwp27Epwn5) | Spotify
-
-
-# December 2025
+# March 2026
 
 ## Writing
-- [The Philosophy of the "Permeable Mind"](blog.html?post=data/the_philosophy_of_the_permeable_mind.md) | Blog
+- [WSL on 32GB: A Quiet Setup That Just Works](blog.html?post=data/wsl_setup_guide.md) | Blog
 
 ## Reading
 - [Disrupting the First Reported AI Orchestrated Cyber Espionage Campaign](https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf) | Paper
