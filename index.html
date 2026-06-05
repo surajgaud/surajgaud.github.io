@@ -1,199 +1,267 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suraj Gaud</title>
+    <title>Suraj Gaud · Senior Software &amp; Data Platform Engineer</title>
+    <meta name="description" content="Suraj Gaud builds next-gen data platform infrastructure that scales for AI and ML.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body>
-    <!-- Animated Background -->
-    <div class="background-gradients">
-        <div class="gradient-blob blob-1"></div>
-        <div class="gradient-blob blob-2"></div>
-        <div class="gradient-blob blob-3"></div>
+<body data-hero="2">
+    <!-- Themed background base -->
+    <div class="bg-base" aria-hidden="true"></div>
+    <!-- Ambient background -->
+    <div class="ambient" aria-hidden="true">
+        <div class="wash"></div>
+        <div class="wash two"></div>
+        <div class="wash three"></div>
     </div>
+    <div class="grain" aria-hidden="true"></div>
 
-    <!-- Glass Navbar -->
-    <nav class="navbar">
-        <a href="#" class="brand">
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="#top" class="brand">
             <span class="brand-text-wrapper">
                 <span class="brand-text-primary">Suraj Gaud</span>
                 <span class="brand-text-secondary">सूरज गौड़</span>
-            </span><span style="color: var(--accent-1)">.</span>
+            </span><span class="dot">.</span>
         </a>
-
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#writing" class="nav-link">Writing</a>
+                <a href="#now" class="nav-link">Now</a>
+            </div>
+            <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                <i class="fa-solid fa-sun sun"></i>
+                <i class="fa-solid fa-moon moon"></i>
+            </button>
+        </div>
     </nav>
 
-    <main class="main-content">
-        <div class="hero-container">
-            <h1>Hi,<br> I'm Suraj<span class="cursor"></span></h1>
+    <main id="top">
+        <!-- ============================ HERO ============================ -->
+        <section class="hero">
+            <div class="wrap">
 
-            <div class="hero-description">
-                <p>Currently focussed on building next gen data platform infrastructure that scales for AI and ML.
-                    You'll find me ramble about IaC, distributed systems, monoliths, and/or CI/CD.
-                    I have a deep passion for solving complex data quality, product analytics, observability, ML
-                    infrastructure problems.</p>
-                <br>
-                <p>feel free to reach out through my social dock below, or take a peek at</p>
-                <p><a href="#" onclick="toggleJournal(event)" class="inline-link">what I'm currently reading and
-                        listening to</a>.</p>
+                <!-- HERO — Editorial -->
+                <div class="hero-v hero-v2">
+                    <div class="watermark" aria-hidden="true">सूरज</div>
+                    <div class="hero2-grid">
+                        <div class="hero2-main">
+                            <span class="eyebrow reveal d1">Senior Software Engineer · Data Platform · Full-Stack</span>
+                            <h1 class="reveal d2">Suraj<br>Gaud<span class="accent">.</span></h1>
+                            <p class="lede reveal d3">
+                                I build the quiet infrastructure underneath intelligent products: data
+                                platforms that stay fast, observable and trustworthy as they scale for AI and ML.
+                            </p>
+                        </div>
+                        <div class="meta-col">
+                            <div class="meta-item reveal d3">
+                                <div class="k">Status</div>
+                                <div class="v"><span class="status-dot"></span>Open to conversations</div>
+                            </div>
+                            <div class="meta-item reveal d4">
+                                <div class="k">Focus</div>
+                                <div class="v">Data platforms &amp; dev tooling</div>
+                            </div>
+                            <div class="meta-item reveal d4">
+                                <div class="k">Currently</div>
+                                <div class="v">Building @ Adobe Express</div>
+                            </div>
+                            <div class="meta-item reveal d5">
+                                <div class="k">Elsewhere</div>
+                                <div class="v"><a href="#now" class="inline-link">Reading &amp; listening →</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </section>
 
-        </div>
-
-        <!-- Journal Section (Expandable) -->
-        <div class="journal-expandable" id="journal-section">
-            <div class="journal-container" id="journal-container">
-                <!-- Content will be loaded dynamically -->
-                <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">Loading journal...</div>
+        <!-- ============================ ABOUT ============================ -->
+        <section class="section" id="about">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="eyebrow">A little context</span>
+                    <h2>I care about the layer most people never see.</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-copy reveal d1">
+                        <p>
+                            Right now I'm building an <strong>AI-first data platform</strong> for engineering and
+                            product at Adobe Express: ML inferencing APIs that personalize what people see, and
+                            semantic search that lets data scientists and PMs query data dictionaries in plain
+                            English instead of memorizing table names.
+                        </p>
+                        <p>
+                            Most of it lives in the layer underneath: <strong>SDKs and client libraries</strong>
+                            that keep data collection consistent, and validation tooling that scans a million-plus
+                            TypeScript files to block bad analytics before they merge.
+                        </p>
+                        <p>
+                            You'll still find me ramble about IaC, monoliths, and the occasional CI/CD rabbit hole,
+                            always chasing <strong>“speed-of-light” engineering</strong>: fast iteration, high
+                            ownership, and pragmatic calls under real production constraints.
+                        </p>
+                    </div>
+                    <div class="focus-card reveal d2">
+                        <div class="k">// things I think about</div>
+                        <div class="chips">
+                            <span class="chip">Distributed Systems</span>
+                            <span class="chip">Kubernetes &amp; Containers</span>
+                            <span class="chip">SDKs &amp; Client Libraries</span>
+                            <span class="chip">Developer Tooling</span>
+                            <span class="chip">Data Quality</span>
+                            <span class="chip">Observability</span>
+                            <span class="chip">ML Infrastructure</span>
+                            <span class="chip">Semantic Search</span>
+                            <span class="chip">Typed Schemas</span>
+                            <span class="chip">CI/CD</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- ============================ WRITING ============================ -->
+        <section class="section" id="writing">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Writing</span>
+                    <h2>Notes on intelligence, infrastructure &amp; the space between.</h2>
+                    <p>Essays I write to figure out what I actually think. More on the way.</p>
+                </div>
+                <div class="post-list" id="postList">
+                    <a href="blog.html?post=data/the_philosophy_of_the_permeable_mind.md" class="post reveal d1">
+                        <div class="post-main">
+                            <div class="post-meta">
+                                <span class="post-tag">Essay</span>
+                                <span>December 2025</span>
+                                <span>· 6 min</span>
+                            </div>
+                            <h3>The Philosophy of the "Permeable Mind"</h3>
+                            <p class="excerpt">On treating LLMs not as isolated chatbots but as a cognitive layer over our data: MCP, RAG, and designing the silent weaver.</p>
+                        </div>
+                        <span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================ NOW ============================ -->
+        <section class="section" id="now">
+            <div class="wrap">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Now</span>
+                    <h2>What's in rotation.</h2>
+                    <p>A living log of what's filling my head and my headphones.</p>
+                </div>
+                <div class="now-grid">
+                    <div class="now-col reveal d1">
+                        <h3><i class="fa-solid fa-book-open"></i> Reading</h3>
+                        <div class="now-month">December 2025</div>
+                        <ul class="now-list">
+                            <li><a class="now-link" target="_blank" href="https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf"><span class="t">Disrupting the First AI-Orchestrated Cyber Espionage Campaign</span><span class="m">Paper</span></a></li>
+                            <li><a class="now-link" target="_blank" href="https://dataintensive.net/"><span class="t">Designing Data-Intensive Applications</span><span class="m">Book</span></a></li>
+                        </ul>
+                        <div class="now-month">November 2025</div>
+                        <ul class="now-list">
+                            <li><a class="now-link" target="_blank" href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition"><span class="t">The Pragmatic Programmer</span><span class="m">Book</span></a></li>
+                        </ul>
+                    </div>
+                    <div class="now-col reveal d2">
+                        <h3><i class="fa-solid fa-headphones"></i> Listening</h3>
+                        <div class="now-month">December 2025</div>
+                        <ul class="now-list">
+                            <li><a class="now-link" target="_blank" href="https://open.spotify.com/playlist/37i9dQZF1DX3wwp27Epwn5"><span class="t">Bollywood Workout</span><span class="m">Spotify</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- Social Dock Footer -->
-    <footer class="social-dock-footer">
-        <div class="social-dock">
-            <a href="mailto:suraj.ug@gmail.com" class="social-icon" title="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="social-icon" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://www.twitter.com/surajgaud_" target="_blank" class="social-icon" title="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="social-icon" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://github.com/surajgaud" target="_blank" class="social-icon" title="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="javascript:void(0)" onclick="rickRoll()" class="social-icon" title="OnlyFans">
-                <i class="fas fa-heart" style="color: #ff0055;"></i>
-            </a>
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="footer">
+        <div class="wrap">
+            <div class="footer-top">
+                <div class="footer-cta reveal">
+                    <h2>Let's build something durable.</h2>
+                    <p>Reach me at <a href="/cdn-cgi/l/email-protection#35464047545f1b4052755258545c591b565a58" class="inline-link mail"><span class="__cf_email__" data-cfemail="b2c1c7c0d3d89cc7d5f2d5dfd3dbde9cd1dddf">[email&#160;protected]</span></a>, or wherever you wander below.</p>
+                </div>
+                <div class="social-dock reveal d1">
+                    <a href="/cdn-cgi/l/email-protection#4a393f382b20643f2d0a2d272b232664292527" class="social-icon" title="Email"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://www.twitter.com/surajgaud_" target="_blank" class="social-icon" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+                    <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/surajgaud" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="javascript:void(0)" onclick="rickRoll()" class="social-icon heart" title="OnlyFans"><i class="fas fa-heart"></i></a>
+                </div>
+            </div>
+            <div class="colophon">
+                <span>© 2026 Suraj Gaud · सूरज गौड़</span>
+                <span>Built with vibes · <a href="#top">back to top ↑</a></span>
+            </div>
         </div>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        /* ---------- Theme ---------- */
+        const root = document.documentElement;
+        const stored = localStorage.getItem('sg-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('sg-theme', next);
+        });
+
+        /* ---------- Brand Hindi toggle ---------- */
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => brandWrapper.classList.toggle('show-hindi'), 4000);
+
+        /* ---------- Rickroll ---------- */
         function rickRoll() {
             window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
         }
 
-        // Brand Name Animation Loop
-        const brandWrapper = document.querySelector('.brand-text-wrapper');
-        setInterval(() => {
-            brandWrapper.classList.toggle('show-hindi');
-        }, 4000);
-
-        // Toggle Journal Section
-        function toggleJournal(event) {
-            event.preventDefault();
-            const journalSection = document.getElementById('journal-section');
-            const isExpanded = journalSection.classList.contains('expanded');
-
-            if (isExpanded) {
-                journalSection.classList.remove('expanded');
-            } else {
-                journalSection.classList.add('expanded');
-                // Load journal content if not already loaded
-                if (!journalSection.dataset.loaded) {
-                    loadJournal();
-                    journalSection.dataset.loaded = 'true';
-                }
-            }
-        }
-
-        // Fetch and Parse Journal Data
-        async function loadJournal() {
-            try {
-                const response = await fetch('data/journal.md');
-                if (!response.ok) throw new Error('Failed to load journal data');
-                const text = await response.text();
-                renderJournal(text);
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('journal-container').innerHTML = `
-                    <div style="text-align: center; color: var(--accent-1); padding: 2rem;">
-                        <p>Unable to load journal entries.</p>
-                        <small>Note: If viewing locally, you need a local server (CORS).</small>
-                    </div>`;
-            }
-        }
-
-        function renderJournal(md) {
-            const lines = md.split('\n');
-            const container = document.getElementById('journal-container');
-            container.innerHTML = ''; // Clear loading state
-
-            let currentMonthDiv = null;
-            let currentList = null;
-
-            lines.forEach(line => {
-                const trimmed = line.trim();
-
-                // H1: Month Title (# Month Year)
-                if (trimmed.startsWith('# ')) {
-                    const monthTitle = trimmed.substring(2);
-                    const monthDiv = document.createElement('div');
-                    monthDiv.className = 'month-block';
-                    monthDiv.style.marginBottom = '60px';
-
-                    const titleEl = document.createElement('h2');
-                    titleEl.className = 'section-title';
-                    titleEl.textContent = monthTitle;
-                    monthDiv.appendChild(titleEl);
-
-                    container.appendChild(monthDiv);
-                    currentMonthDiv = monthDiv;
-                }
-                // H2: Section Title (## Reading / ## Listening)
-                else if (trimmed.startsWith('## ')) {
-                    const sectionTitle = trimmed.substring(3);
-                    const secDiv = document.createElement('div');
-                    secDiv.className = 'journal-section-group';
-                    secDiv.style.marginBottom = '30px';
-
-                    const subTitle = document.createElement('h3');
-                    subTitle.className = 'month-title';
-                    subTitle.style.color = 'var(--text-primary)';
-                    subTitle.style.fontSize = '1.2rem';
-                    subTitle.textContent = sectionTitle;
-
-                    currentList = document.createElement('ul');
-                    currentList.className = 'journal-list';
-
-                    secDiv.appendChild(subTitle);
-                    secDiv.appendChild(currentList);
-
-                    if (currentMonthDiv) {
-                        currentMonthDiv.appendChild(secDiv);
-                    } else {
-                        container.appendChild(secDiv);
-                    }
-                }
-                // List Item (- [Title](url) | Meta)
-                else if (trimmed.startsWith('- ')) {
-                    if (currentList) {
-                        const match = trimmed.match(/- \[(.*?)\]\((.*?)\)\s*\|\s*(.*)/);
-                        if (match) {
-                            const [_, text, url, meta] = match;
-                            const li = document.createElement('li');
-                            li.innerHTML = `
-                                <a href="${url}" target="_blank" class="journal-link">
-                                    <span class="link-text">${text}</span>
-                                    <span class="link-meta">${meta}</span>
-                                </a>
-                            `;
-                            currentList.appendChild(li);
-                        }
-                    }
-                }
+        /* ---------- Reveal on scroll ---------- */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        function observeReveals() { document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el)); }
+        function revealVisible() {
+            document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+                const r = el.getBoundingClientRect();
+                if (r.top < window.innerHeight * 0.95) el.classList.add('in');
             });
         }
+        function initReveals() {
+            observeReveals();
+            revealVisible();
+        }
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            requestAnimationFrame(initReveals);
+        } else {
+            window.addEventListener('DOMContentLoaded', () => requestAnimationFrame(initReveals));
+        }
+        window.addEventListener('load', revealVisible);
+        // safety net: never leave content invisible
+        setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
+        }), 1200);
+
+        /* ---------- Navbar shadow on scroll ---------- */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('tucked', window.scrollY > 20);
+        }, { passive: true });
     </script>
 </body>
 

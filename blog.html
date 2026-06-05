@@ -1,281 +1,175 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Blog | Suraj Gaud</title>
-    <meta name="description" content="Blog posts and writings">
+    <meta name="description" content="Essays by Suraj Gaud.">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Marked.js for Markdown parsing -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
-        .blog-post {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .blog-post h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 2rem;
-            line-height: 1.2;
-        }
-
-        .blog-post h2 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 3rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.3;
-        }
-
-        .blog-post h3 {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .blog-post p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .blog-post strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .blog-post em {
-            font-style: italic;
-        }
-
-        .blog-post a {
-            color: var(--accent-1);
-            text-decoration: none;
-            border-bottom: 1px solid transparent;
-            transition: border-color 0.3s ease;
-        }
-
-        .blog-post a:hover {
-            border-bottom-color: var(--accent-1);
-        }
-
-        .blog-post ul,
-        .blog-post ol {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        .blog-post li {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-secondary);
-            margin-bottom: 0.5rem;
-        }
-
-        .blog-post blockquote {
-            border-left: 4px solid var(--accent-1);
-            padding-left: 1.5rem;
-            margin: 2rem 0;
-            font-style: italic;
-            color: var(--text-secondary);
-        }
-
-        .blog-post code {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.2rem 0.4rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9em;
-            color: var(--accent-1);
-        }
-
-        .blog-post pre {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 1.5rem;
-            border-radius: 8px;
-            overflow-x: auto;
-            margin-bottom: 1.5rem;
-        }
-
-        .blog-post pre code {
-            background: none;
-            padding: 0;
-            color: var(--text-secondary);
-        }
+        .article-shell { max-width: 720px; margin: 0 auto; padding: 130px 28px 40px; position: relative; z-index: 1; }
 
         .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-            transition: color 0.3s ease;
+            display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--text-2); text-decoration: none; margin-bottom: 40px;
+            padding: 8px 16px 8px 12px; border: 1px solid var(--border); border-radius: 100px;
+            transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease), gap 0.2s;
         }
+        .back-link:hover { color: var(--terracotta); border-color: var(--terracotta); gap: 12px; }
 
-        .back-link:hover {
-            color: var(--accent-1);
+        .article-meta {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-3); margin-bottom: 22px;
         }
+        .article-meta span { white-space: nowrap; }
+        .article-meta .tag { color: var(--terracotta); }
 
-        .back-link i {
-            font-size: 0.85rem;
+        .blog-post h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em;
+            line-height: 1.08; color: var(--text); margin-bottom: 40px; text-wrap: balance;
         }
+        .blog-post h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -0.02em;
+            color: var(--text); margin: 3rem 0 1.2rem; line-height: 1.2;
+        }
+        .blog-post h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 600; color: var(--text); margin: 2.2rem 0 1rem;
+        }
+        .blog-post p { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 1.5rem; }
+        .blog-post strong { color: var(--text); font-weight: 600; }
+        .blog-post em { font-style: italic; }
+        .blog-post a {
+            color: var(--text); text-decoration: none;
+            background-image: linear-gradient(var(--terracotta), var(--terracotta));
+            background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
+            transition: background-size 0.3s var(--ease), color 0.2s;
+        }
+        .blog-post a:hover { color: var(--terracotta); background-size: 100% 100%; }
+        .blog-post ul, .blog-post ol { margin: 0 0 1.5rem 1.4rem; }
+        .blog-post li { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 0.6rem; }
+        .blog-post li::marker { color: var(--terracotta); }
+        .blog-post blockquote {
+            border-left: 2px solid var(--terracotta); padding: 4px 0 4px 24px; margin: 2rem 0;
+            font-family: var(--font-display); font-size: 1.3rem; font-style: normal; font-weight: 500;
+            color: var(--text); line-height: 1.5;
+        }
+        .blog-post hr { border: 0; height: 1px; background: var(--border); margin: 3rem 0; }
+        .blog-post code {
+            background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
+            font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
+        }
+        .blog-post pre {
+            background: var(--bg-2); border: 1px solid var(--border-2);
+            padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+        }
+        .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
 
-        .loading-state {
-            text-align: center;
-            color: var(--text-secondary);
-            padding: 4rem 2rem;
-        }
+        .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-2); }
 
-        .error-state {
-            text-align: center;
-            color: var(--accent-1);
-            padding: 4rem 2rem;
-        }
-
-        .error-state h2 {
-            margin-bottom: 1rem;
-        }
+        .loading-state, .error-state { text-align: center; color: var(--text-2); padding: 5rem 2rem; }
+        .error-state h2 { font-family: var(--font-display); color: var(--text); margin-bottom: 1rem; }
     </style>
 </head>
 
 <body>
-    <!-- Animated Background -->
-    <div class="background-gradients">
-        <div class="gradient-blob blob-1"></div>
-        <div class="gradient-blob blob-2"></div>
-        <div class="gradient-blob blob-3"></div>
+    <div class="bg-base" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true">
+        <div class="wash"></div>
+        <div class="wash two"></div>
+        <div class="wash three"></div>
     </div>
+    <div class="grain" aria-hidden="true"></div>
 
-    <!-- Glass Navbar -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <a href="index.html" class="brand">
             <span class="brand-text-wrapper">
                 <span class="brand-text-primary">Suraj Gaud</span>
                 <span class="brand-text-secondary">सूरज गौड़</span>
-            </span><span style="color: var(--accent-1)">.</span>
+            </span><span class="dot">.</span>
         </a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="index.html#about" class="nav-link">About</a>
+                <a href="index.html#writing" class="nav-link">Writing</a>
+                <a href="index.html#now" class="nav-link">Now</a>
+            </div>
+            <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                <i class="fa-solid fa-sun sun"></i>
+                <i class="fa-solid fa-moon moon"></i>
+            </button>
+        </div>
     </nav>
 
-    <main class="main-content">
-        <div class="blog-post" id="blog-content">
-            <div class="loading-state">
-                <p>Loading blog post...</p>
-            </div>
-        </div>
+    <main class="article-shell">
+        <a href="index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a>
+        <article class="blog-post" id="blog-content">
+            <div class="loading-state"><p>Loading…</p></div>
+        </article>
     </main>
 
-    <!-- Social Dock Footer -->
-    <footer class="social-dock-footer">
-        <div class="social-dock">
-            <a href="mailto:suraj.ug@gmail.com" class="social-icon" title="Email">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/surajgaud/" target="_blank" class="social-icon" title="LinkedIn">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://www.twitter.com/surajgaud_" target="_blank" class="social-icon" title="Twitter">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.instagram.com/surajgaud/?hl=en" target="_blank" class="social-icon" title="Instagram">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://github.com/surajgaud" target="_blank" class="social-icon" title="GitHub">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="javascript:void(0)" onclick="rickRoll()" class="social-icon" title="OnlyFans">
-                <i class="fas fa-heart" style="color: #ff0055;"></i>
-            </a>
-        </div>
-    </footer>
-
     <script>
-        function rickRoll() {
-            window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
-        }
+        /* Theme */
+        const root = document.documentElement;
+        const stored = localStorage.getItem('sg-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('sg-theme', next);
+        });
 
-        // Brand Name Animation Loop
+        /* Brand Hindi toggle */
         const brandWrapper = document.querySelector('.brand-text-wrapper');
-        setInterval(() => {
-            brandWrapper.classList.toggle('show-hindi');
-        }, 4000);
+        setInterval(() => brandWrapper.classList.toggle('show-hindi'), 4000);
 
-        // Get markdown file from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const mdFile = urlParams.get('post');
+        /* Navbar shadow */
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('tucked', window.scrollY > 20), { passive: true });
 
+        /* Render post */
+        const mdFile = new URLSearchParams(window.location.search).get('post');
+        const META = {
+            'data/the_philosophy_of_the_permeable_mind.md': { tag: 'Essay', date: 'December 2025', read: '6 min read' }
+        };
         if (!mdFile) {
-            document.getElementById('blog-content').innerHTML = `
-                <div class="error-state">
-                    <h2>No blog post specified</h2>
-                    <p>Please provide a post parameter in the URL.</p>
-                    <a href="index.html" class="back-link">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                </div>
-            `;
+            document.getElementById('blog-content').innerHTML =
+                '<div class="error-state"><h2>No post specified</h2><p>Head back to <a href="index.html#writing">all writing</a>.</p></div>';
         } else {
-            loadAndRenderMarkdown(mdFile);
+            render(mdFile);
         }
-
-        async function loadAndRenderMarkdown(filePath) {
+        async function render(filePath) {
             try {
-                const response = await fetch(filePath);
-                if (!response.ok) {
-                    throw new Error(`Failed to load: ${response.status} ${response.statusText}`);
-                }
-
-                const markdown = await response.text();
-
-                // Configure marked options
-                marked.setOptions({
-                    breaks: true,
-                    gfm: true,
-                    headerIds: true,
-                    mangle: false
-                });
-
-                // Parse markdown to HTML
-                const htmlContent = marked.parse(markdown);
-
-                // Extract title from first H1 for page title
-                const titleMatch = markdown.match(/^#\s+(.+)$/m);
-                if (titleMatch) {
-                    document.getElementById('page-title').textContent = `${titleMatch[1]} | Suraj Gaud`;
-                }
-
-                // Render content with back link
-                document.getElementById('blog-content').innerHTML = `
-                    <a href="index.html" class="back-link">
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                    ${htmlContent}
-                `;
-
-            } catch (error) {
-                console.error('Error loading markdown:', error);
-                document.getElementById('blog-content').innerHTML = `
-                    <div class="error-state">
-                        <h2>Failed to load blog post</h2>
-                        <p>${error.message}</p>
-                        <small>File: ${filePath}</small>
-                        <br><br>
-                        <a href="index.html" class="back-link">
-                            <i class="fas fa-arrow-left"></i>
-                        </a>
-                    </div>
-                `;
+                const res = await fetch(filePath);
+                if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
+                const md = await res.text();
+                marked.setOptions({ breaks: true, gfm: true, headerIds: true, mangle: false });
+                // pull first H1 out as the styled title + meta
+                const lines = md.split('\n');
+                let title = '';
+                const idx = lines.findIndex(l => /^#\s+/.test(l));
+                if (idx > -1) { title = lines[idx].replace(/^#\s+/, '').trim(); lines.splice(idx, 1); }
+                const body = marked.parse(lines.join('\n'));
+                const m = META[filePath] || { tag: 'Essay', date: '', read: '' };
+                if (title) document.getElementById('page-title').textContent = title + ' | Suraj Gaud';
+                document.getElementById('blog-content').innerHTML =
+                    '<div class="article-meta"><span class="tag">' + m.tag + '</span>' +
+                    (m.date ? '<span>' + m.date + '</span>' : '') +
+                    (m.read ? '<span>· ' + m.read + '</span>' : '') + '</div>' +
+                    (title ? '<h1>' + title + '</h1>' : '') + body +
+                    '<div class="article-foot"><a href="index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a></div>';
+            } catch (e) {
+                document.getElementById('blog-content').innerHTML =
+                    '<div class="error-state"><h2>Couldn\'t load this post</h2><p>' + e.message +
+                    '</p><p><a href="index.html#writing">Back to all writing</a></p></div>';
             }
         }
     </script>
