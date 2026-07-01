@@ -59,6 +59,13 @@
     </footer>
 
     <script>
+        /* Match the theme chosen on the homepage */
+        (() => {
+            const stored = localStorage.getItem('sg-theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        })();
+
         function rickRoll() {
             window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley";
         }
@@ -91,7 +98,6 @@
             const container = document.getElementById('journal-container');
             container.innerHTML = ''; // Clear loading state
 
-            let currentSection = null;
             let currentMonthDiv = null;
             let currentList = null;
 
@@ -100,34 +106,26 @@
 
                 // H1: Month Title (# Month Year)
                 if (trimmed.startsWith('# ')) {
-                    // Close previous month group if exists
-                    if (currentMonthDiv) container.appendChild(currentSection);
-
                     const monthTitle = trimmed.substring(2);
                     const monthDiv = document.createElement('div');
                     monthDiv.className = 'month-block';
-                    monthDiv.style.marginBottom = '60px';
 
                     const titleEl = document.createElement('h2');
-                    titleEl.className = 'section-title'; // Reusing style
+                    titleEl.className = 'section-title';
                     titleEl.textContent = monthTitle;
                     monthDiv.appendChild(titleEl);
 
                     container.appendChild(monthDiv);
                     currentMonthDiv = monthDiv;
-                    currentSection = null; // Reset section context
                 }
                 // H2: Section Title (## Reading / ## Listening)
                 else if (trimmed.startsWith('## ')) {
                     const sectionTitle = trimmed.substring(3);
                     const secDiv = document.createElement('div');
                     secDiv.className = 'journal-section-group';
-                    secDiv.style.marginBottom = '30px';
 
                     const subTitle = document.createElement('h3');
-                    subTitle.className = 'month-title'; // Reusing style for subsection header
-                    subTitle.style.color = 'var(--text-primary)';
-                    subTitle.style.fontSize = '1.2rem';
+                    subTitle.className = 'journal-section-label';
                     subTitle.textContent = sectionTitle;
 
                     currentList = document.createElement('ul');
@@ -147,14 +145,16 @@
                 else if (trimmed.startsWith('- ')) {
                     if (currentList) {
                         // Regex to parse: - [Title](link) | Meta
-                        const match = trimmed.match(/- \[(.*?)\]\((.*?)\)\s*\|\s*(.*)/);
+                        const match = trimmed.match(/- \[(.*?)\]\((.*?)\)(?:\s*\|\s*(.*))?/);
                         if (match) {
-                            const [_, text, url, meta] = match;
+                            const [_, text, url, metaRaw] = match;
+                            // Format: [Title](url) | Tag | Excerpt — journal shows the Tag only
+                            const meta = (metaRaw || '').split('|')[0].trim();
                             const li = document.createElement('li');
                             li.innerHTML = `
                                 <a href="${url}" target="_blank" class="journal-link">
                                     <span class="link-text">${text}</span>
-                                    <span class="link-meta">${meta}</span>
+                                    ${meta ? `<span class="link-meta">${meta}</span>` : ''}
                                 </a>
                             `;
                             currentList.appendChild(li);

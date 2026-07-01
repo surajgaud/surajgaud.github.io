@@ -47,35 +47,25 @@
         <section class="hero">
             <div class="wrap">
 
-                <!-- HERO — Editorial -->
+                <!-- HERO — The layer beneath -->
                 <div class="hero-v hero-v2">
                     <div class="watermark" aria-hidden="true">सूरज</div>
-                    <div class="hero2-grid">
-                        <div class="hero2-main">
-                            <span class="eyebrow reveal d1">Senior Software Engineer · Data Platform · Full-Stack</span>
-                            <h1 class="reveal d2">Suraj<br>Gaud<span class="accent">.</span></h1>
-                            <p class="lede reveal d3">
-                                I build the quiet infrastructure underneath intelligent products: data
-                                platforms that stay fast, observable and trustworthy as they scale for AI and ML.
-                            </p>
-                        </div>
-                        <div class="meta-col">
-                            <div class="meta-item reveal d3">
-                                <div class="k">Status</div>
-                                <div class="v"><span class="status-dot"></span>Open to conversations</div>
-                            </div>
-                            <div class="meta-item reveal d4">
-                                <div class="k">Focus</div>
-                                <div class="v">Data platforms &amp; dev tooling</div>
-                            </div>
-                            <div class="meta-item reveal d4">
-                                <div class="k">Currently</div>
-                                <div class="v">Building @ Adobe Express</div>
-                            </div>
-                            <div class="meta-item reveal d5">
-                                <div class="k">Elsewhere</div>
-                                <div class="v"><a href="#now" class="inline-link">Reading &amp; listening →</a></div>
-                            </div>
+
+                    <div class="hero2-main">
+                        <p class="signature reveal d1">
+                            <span class="sig-name">Suraj Gaud</span>
+                            <span class="sig-sep" aria-hidden="true"></span>
+                            <span class="sig-role">Sr. Software &amp; Data Platform Engineer</span>
+                        </p>
+                        <h1 class="reveal d2">I build the layer<br>most people <span class="accent">never see</span>.</h1>
+                        <p class="lede reveal d3">
+                            The quiet infrastructure under intelligent products — data platforms that
+                            stay fast, observable, and trustworthy as they scale for AI and ML.
+                        </p>
+                        <div class="status-row reveal d3">
+                            <span class="status-pill"><span class="status-dot"></span>Open to conversations</span>
+                            <span class="status-sep" aria-hidden="true"></span>
+                            <span class="status-now">Currently building <a href="#about" class="inline-link">@ Adobe Express</a></span>
                         </div>
                     </div>
                 </div>
@@ -132,9 +122,7 @@
         <section class="section" id="writing">
             <div class="wrap">
                 <div class="section-head reveal">
-                    <span class="eyebrow">Writing</span>
-                    <h2>Notes on intelligence, infrastructure &amp; the space between.</h2>
-                    <p>Essays I write to figure out what I actually think. More on the way.</p>
+                    <h2>Writing<span class="accent">.</span></h2>
                 </div>
                 <div class="post-list" id="postList">
                     <a href="blog.html?post=data/the_philosophy_of_the_permeable_mind.md" class="post reveal d1">
@@ -164,22 +152,28 @@
                 <div class="now-grid">
                     <div class="now-col reveal d1">
                         <h3><i class="fa-solid fa-book-open"></i> Reading</h3>
-                        <div class="now-month">December 2025</div>
-                        <ul class="now-list">
-                            <li><a class="now-link" target="_blank" href="https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf"><span class="t">Disrupting the First AI-Orchestrated Cyber Espionage Campaign</span><span class="m">Paper</span></a></li>
-                            <li><a class="now-link" target="_blank" href="https://dataintensive.net/"><span class="t">Designing Data-Intensive Applications</span><span class="m">Book</span></a></li>
-                        </ul>
-                        <div class="now-month">November 2025</div>
-                        <ul class="now-list">
-                            <li><a class="now-link" target="_blank" href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition"><span class="t">The Pragmatic Programmer</span><span class="m">Book</span></a></li>
-                        </ul>
+                        <!-- Synced from data/journal.md; static fallback for offline/file:// -->
+                        <div class="now-col-body" id="nowReading">
+                            <div class="now-month">June 2026</div>
+                            <ul class="now-list">
+                                <li><a class="now-link" target="_blank" rel="noopener" href="https://claude.com/blog/how-anthropic-enables-self-service-data-analytics-with-claude"><span class="t">Self-Service Data Analytics with Claude</span><span class="m">Blog</span></a></li>
+                                <li><a class="now-link" target="_blank" rel="noopener" href="https://github.com/apple/container"><span class="t">Apple Containers</span><span class="m">Repo</span></a></li>
+                            </ul>
+                            <div class="now-month">May 2026</div>
+                            <ul class="now-list">
+                                <li><a class="now-link" target="_blank" rel="noopener" href="https://assets.anthropic.com/m/ec212e6566a0d47/original/Disrupting-the-first-reported-AI-orchestrated-cyber-espionage-campaign.pdf"><span class="t">Disrupting the First AI-Orchestrated Cyber Espionage Campaign</span><span class="m">Paper</span></a></li>
+                                <li><a class="now-link" target="_blank" rel="noopener" href="https://dataintensive.net/"><span class="t">Designing Data-Intensive Applications</span><span class="m">Book</span></a></li>
+                            </ul>
+                        </div>
                     </div>
                     <div class="now-col reveal d2">
                         <h3><i class="fa-solid fa-headphones"></i> Listening</h3>
-                        <div class="now-month">December 2025</div>
-                        <ul class="now-list">
-                            <li><a class="now-link" target="_blank" href="https://open.spotify.com/playlist/37i9dQZF1DX3wwp27Epwn5"><span class="t">Bollywood Workout</span><span class="m">Spotify</span></a></li>
-                        </ul>
+                        <div class="now-col-body" id="nowListening">
+                            <div class="now-month">June 2026</div>
+                            <ul class="now-list">
+                                <li><a class="now-link" target="_blank" rel="noopener" href="https://open.spotify.com/playlist/37i9dQZF1DX3wwp27Epwn5"><span class="t">Bollywood Workout</span><span class="m">Spotify</span></a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,6 +250,109 @@
         setTimeout(() => document.querySelectorAll('.reveal:not(.in)').forEach(el => {
             if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('in');
         }), 1200);
+
+        /* ---------- Now: sync from data/journal.md (single source of truth) ---------- */
+        function setupNowScroll() {
+            document.querySelectorAll('.now-col-body').forEach(el => {
+                const update = () => {
+                    const can = el.scrollHeight > el.clientHeight + 1;
+                    el.classList.toggle('can-scroll', can);
+                    el.classList.toggle('at-bottom', can && el.scrollTop + el.clientHeight >= el.scrollHeight - 2);
+                };
+                update();
+                if (!el.dataset.scrollBound) {
+                    el.addEventListener('scroll', update, { passive: true });
+                    el.dataset.scrollBound = '1';
+                }
+            });
+        }
+
+        const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+        // Resolve "blog.html?post=data/foo.md" → "data/foo.md" (internal posts only)
+        function postPath(url) {
+            const i = url.indexOf('?post=');
+            if (i < 0) return null;
+            const p = decodeURIComponent(url.slice(i + 6).split('&')[0]);
+            return /\.md$/.test(p) ? p : null;
+        }
+        async function readMinutes(path) {
+            try {
+                const r = await fetch(path);
+                if (!r.ok) return null;
+                const words = (await r.text()).trim().split(/\s+/).filter(Boolean).length;
+                return Math.max(1, Math.round(words / 200));
+            } catch { return null; }
+        }
+        async function renderWriting(entries) {
+            const el = document.getElementById('postList');
+            if (!el || !entries.length) return;
+            const cards = await Promise.all(entries.map(async (e, i) => {
+                const path = postPath(e.url);
+                const mins = path ? await readMinutes(path) : null;
+                const tag = e.fields[0] || 'Writing';
+                const excerpt = e.fields[1] || '';
+                const meta = `<span class="post-tag">${esc(tag)}</span><span>${esc(e.month)}</span>`
+                    + (mins ? `<span>· ${mins} min</span>` : '');
+                return `<a href="${esc(e.url)}" class="post reveal d${Math.min(i + 1, 5)}">`
+                    + `<div class="post-main"><div class="post-meta">${meta}</div>`
+                    + `<h3>${esc(e.title)}</h3>`
+                    + (excerpt ? `<p class="excerpt">${esc(excerpt)}</p>` : '')
+                    + `</div><span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span></a>`;
+            }));
+            el.innerHTML = cards.join('');
+            initReveals();
+        }
+
+        async function loadNow() {
+            try {
+                const res = await fetch('data/journal.md');
+                if (res.ok) {
+                    const text = await res.text();
+                    const months = [];
+                    let month = null, section = null;
+                    text.split('\n').forEach(raw => {
+                        const line = raw.trim();
+                        if (line.startsWith('# ')) {
+                            month = { name: line.slice(2).trim(), sections: {} };
+                            months.push(month);
+                            section = null;
+                        } else if (line.startsWith('## ')) {
+                            section = line.slice(3).trim();
+                            if (month) month.sections[section] ??= [];
+                        } else if (line.startsWith('- ') && month && section) {
+                            const m = line.match(/- \[(.*?)\]\((.*?)\)(?:\s*\|\s*(.*))?/);
+                            if (m) month.sections[section].push({
+                                title: m[1], url: m[2],
+                                fields: (m[3] || '').split('|').map(s => s.trim()).filter(Boolean)
+                            });
+                        }
+                    });
+
+                    const renderNow = (key, el) => {
+                        const html = months
+                            .filter(mo => (mo.sections[key] || []).length)
+                            .map(mo => `<div class="now-month">${esc(mo.name)}</div><ul class="now-list">` +
+                                mo.sections[key].map(it =>
+                                    `<li><a class="now-link" target="_blank" rel="noopener" href="${esc(it.url)}"><span class="t">${esc(it.title)}</span>${it.fields[0] ? `<span class="m">${esc(it.fields[0])}</span>` : ''}</a></li>`
+                                ).join('') + '</ul>').join('');
+                        if (html) el.innerHTML = html;
+                    };
+                    const reading = document.getElementById('nowReading');
+                    const listening = document.getElementById('nowListening');
+                    if (reading) renderNow('Reading', reading);
+                    if (listening) renderNow('Listening', listening);
+
+                    const writing = months.flatMap(mo =>
+                        (mo.sections['Writing'] || []).map(it => ({ ...it, month: mo.name })));
+                    await renderWriting(writing);
+                }
+            } catch { /* file:// / offline → keep static fallback markup */ }
+
+            setupNowScroll();
+            window.addEventListener('resize', setupNowScroll, { passive: true });
+        }
+        loadNow();
 
         /* ---------- Navbar shadow on scroll ---------- */
         const navbar = document.getElementById('navbar');
