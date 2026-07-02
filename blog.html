@@ -151,9 +151,20 @@
                 const res = await fetch(filePath);
                 if (!res.ok) throw new Error(res.status + ' ' + res.statusText);
                 const md = await res.text();
-                marked.setOptions({ breaks: true, gfm: true, headerIds: true, mangle: false });
+                const basePath = filePath.slice(0, filePath.lastIndexOf('/') + 1);
+                const baseUrl = new URL(basePath, window.location.href);
+                const fixedMd = md.replace(/(<img\b[^>]*?\bsrc=["'])(\.\/[^"'>]+)(["'][^>]*>)/gi,
+                    (_, prefix, src, suffix) => prefix + new URL(src, baseUrl).href + suffix);
+                const renderer = new marked.Renderer();
+                renderer.image = function (href, title, text) {
+                    if (href && !/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(href) && !href.startsWith('/')) {
+                        href = new URL(href, baseUrl).href;
+                    }
+                    return marked.Renderer.prototype.image.call(this, href, title, text);
+                };
+                marked.setOptions({ breaks: true, gfm: true, headerIds: true, mangle: false, renderer });
                 // pull first H1 out as the styled title + meta
-                const lines = md.split('\n');
+                const lines = fixedMd.split('\n');
                 let title = '';
                 const idx = lines.findIndex(l => /^#\s+/.test(l));
                 if (idx > -1) { title = lines[idx].replace(/^#\s+/, '').trim(); lines.splice(idx, 1); }
