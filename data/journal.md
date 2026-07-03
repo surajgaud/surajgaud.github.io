@@ -2,7 +2,7 @@
 
 ## Writing
 
-- [Eval Driven Development for a RTS Gaming Co-pilot](blog.html?post=data/eval_driven_development_for_aoe2_copilot.md) | Blog | Coming soon — building evals for a real-time-strategy gaming co-pilot.
+- [An RTS-AI coach for Age of Empires II](blog.html?post=data/eval_driven_development_for_aoe2_copilot.md) | Blog | Spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.
 
 # June 2026
 

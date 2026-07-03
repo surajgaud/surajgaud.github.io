@@ -1,8 +1,17 @@
-# A RTS-AI coach for Age of Empires II
+# An RTS-AI coach for Age of Empires II
+
+<div style="display:flex; flex-wrap:wrap; gap:8px; margin:0 0 34px;">
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Eval-Driven Development</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Real-Time AI</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Token Optimization</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Prompt Caching</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">LLM-as-Judge</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">OCR Pipeline</span>
+</div>
 
 I wanted to use AI for a domain where reality changes every few seconds. Most useful LLM applications today are post-processing: summarize the meeting after it happened, review the code after it's written, analyze the match after it's over. The model gets full context, thinks as long as it needs, and nobody is blocked waiting. Real-time play is the opposite. In a ranked game of Age of Empires II you make an economy decision roughly every ten seconds, and advice that arrives thirty seconds late describes a game that no longer exists.
 
-So I built an efficient copilot for AoE2. I truly believe that after copilots for software development, copilots for gaming are next, packaged and sold as DLCs. This one is deliberately lean: it watches specific zones of your screen, like the HUD, reads the numbers off them while you play, and talks to you through text-to-speech like a coach sitting behind you. "500 food banked, click Feudal Age now."
+So I built a copilot for AoE2. I think gaming copilots come next after coding copilots — packaged and sold as DLC. This one is deliberately lean. It watches a few zones of your screen, like the HUD, reads the numbers while you play, and talks back through text-to-speech, like a coach sitting behind you. "500 food banked, click Feudal Age now."
 
 The goal is to take any beginner and supercharge them to 800-1000 ELO. The bet behind it: what separates a beginner from a decent ranked player is not game knowledge, it is execution. Villager production stops. Resources pile up unspent. The age-up click comes two minutes late. Better players simply don't do these things. A copilot that keeps you honest about them, calls a civilization-specific build order on time, and layers civ-specific micro optimizations on top is worth hundreds of ELO before any deep strategy enters the picture.
 
@@ -10,7 +19,7 @@ Two decisions made this work, and they are what this post is really about: the s
 
 ## The constraint that shaped everything
 
-This has to run for a full match, up to an hour or more, react within seconds, and not cost real money per game. That rules out the obvious design of "send a screenshot to a vision model every few seconds." Too slow, and at one call every five seconds a single match would burn hundreds of large-context calls.
+This has to run for a full match, up to an hour or more, react within seconds, and not cost real money per game. That rules out the obvious design of "send a screenshot to a vision model every few seconds." It's too slow, and at one call every five seconds, a single match racks up hundreds of large-context calls.
 
 The design that falls out has three stages. Screen capture and OCR turn pixels into a handful of integers: food, wood, gold, stone, current age, the match clock. Plain code turns those integers into facts: gather rates per minute, whether you can afford the next age, whether a resource has been sitting unspent for twenty seconds. Only then does anything decide what to say, and the thing deciding is usually not an LLM.
 
@@ -24,7 +33,7 @@ The two channels have a contract. Alarms always speak first, and the LLM yields 
 
 ## Being cheap on purpose
 
-Token efficiency was not an optimization pass at the end. It is most of the architecture, and it is the reason this can ship as a thing people leave running for every match rather than a demo.
+Token efficiency was not an optimization pass at the end. It is most of the architecture, and it is why this ships as something people leave running every match, not a demo they try once.
 
 The deterministic channel handles the majority of spoken output, every build-order step, every age-up call, every float nag, at exactly zero tokens. During the scripted opening, roughly the first twelve minutes, the LLM is not called at all: the build order is fully known, so there is nothing for a model to decide. After that, the LLM channel is capped at one call per 30 seconds, and it skips the call entirely when the economy has barely moved since last time, which covers long stretches of turtling and fighting.
 
@@ -94,4 +103,4 @@ The system currently coaches six civilizations with hand-tuned build orders, and
 
 If you take one thing from this post, take the altitude rule. Put the model exactly where judgment lives, and nowhere else. Below it, deterministic code that reads sensors and fires reflexes, testable the boring way. Above it, an eval harness built on recorded reality, because that is the only way to know whether the judgment is any good.
 
-You can read try out this copilot here: https://github.com/surajgaud/aoe2_copilot 
+You can try out this copilot here: https://github.com/surajgaud/aoe2_copilot 
