@@ -286,7 +286,7 @@ main { position: relative; z-index: 1; }
     position: relative;
     display: flex;
     align-items: center;
-    padding: 180px 0 56px;
+    padding: 180px 0 32px;
 }
 
 .hero-v { display: none; width: 100%; }
@@ -496,7 +496,7 @@ body[data-hero="3"] .hero-v3 { display: block; }
 /* ============================================================
    Section frame
    ============================================================ */
-.section { padding: 56px 0; position: relative; }
+.section { padding: 32px 0; position: relative; }
 .section-head { margin-bottom: 36px; max-width: 60ch; }
 .section-head .eyebrow { margin-bottom: 18px; }
 .section-head h2 {
