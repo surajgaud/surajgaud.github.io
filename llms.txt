@@ -1,0 +1,30 @@
+# Suraj Gaud
+
+> Senior Software & Data Platform Engineer at Adobe Express. Builds AI-first data platforms, ML inferencing APIs for personalization, semantic search, and the SDKs/client libraries that keep data collection consistent across a large-scale TypeScript codebase. Writes essays on eval-driven development, LLM infrastructure, and distributed systems.
+
+Suraj Gaud (सूरज गौड़) is currently building an AI-first data platform for engineering and product at Adobe Express: ML inferencing APIs for personalization, semantic search, and a network of connected data systems for faster data discovery. Most of the work sits in the layer underneath — SDKs and client libraries that keep data collection consistent across a codebase of a million-plus TypeScript files.
+
+Core engineering interests: ML infrastructure, semantic search & RAG, multi-agent orchestration & LLM routing, harness and loop engineering, eval-driven development, distributed systems, Kubernetes & containers, SDKs & client libraries, developer tooling, and data quality & observability.
+
+## Essays
+
+- [An RTS-AI coach for Age of Empires II](https://surajgaud.github.io/data/eval_driven_development_for_aoe2_copilot.md): Building a real-time AoE2 copilot — spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't. Covers token/cost optimization, prompt caching, and LLM-as-judge evaluation for real-time AI systems.
+- [The Philosophy of the "Permeable Mind"](https://surajgaud.github.io/data/the_philosophy_of_the_permeable_mind.md): On treating LLMs not as isolated chatbots but as a cognitive layer over data — MCP as the standard socket for tool connection, RAG as curated context rather than search, and designing AI systems as a "silent weaver" that disappears into the workflow.
+
+## Pages
+
+- [Home / About](https://surajgaud.github.io/): Background, current role at Adobe Express, and engineering focus areas.
+- [Writing index](https://surajgaud.github.io/#writing): All essays, rendered from Markdown.
+- [Now](https://surajgaud.github.io/#now): Currently reading, listening to, and writing — updated monthly.
+- [Journal](https://surajgaud.github.io/journal.html): Full historical log of reading/listening/writing entries, sourced from journal.md below.
+
+## Source data
+
+- [Journal log (raw Markdown)](https://surajgaud.github.io/data/journal.md): Machine-readable, month-by-month log of writing, reading, and listening — the single source of truth rendered onto the Home and Journal pages.
+
+## Optional
+
+- [LinkedIn](https://www.linkedin.com/in/surajgaud/)
+- [GitHub](https://github.com/surajgaud)
+- [Twitter / X](https://www.twitter.com/surajgaud_)
+- [Email](mailto:suraj.ug@gmail.com)

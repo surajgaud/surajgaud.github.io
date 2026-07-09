@@ -2,12 +2,12 @@
 
 ## Writing
 
-- [An RTS-AI coach for Age of Empires II](blog.html?post=data/eval_driven_development_for_aoe2_copilot.md) | Blog | Spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.
+- [An RTS-AI coach for Age of Empires II](essays/eval_driven_development_for_aoe2_copilot.html) | Blog | Spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.
 
 # June 2026
 
 ## Writing
-- [The Philosophy of the "Permeable Mind"](blog.html?post=data/the_philosophy_of_the_permeable_mind.md) | Blog | On treating LLMs not as isolated chatbots but as a cognitive layer over our data: MCP, RAG, and designing the silent weaver.
+- [The Philosophy of the "Permeable Mind"](essays/the_philosophy_of_the_permeable_mind.html) | Blog | On treating LLMs not as isolated chatbots but as a cognitive layer over our data: MCP, RAG, and designing the silent weaver.
 
 ## Reading
 - [Self Service Data Analytics](https://claude.com/blog/how-anthropic-enables-self-service-data-analytics-with-claude) | Blog

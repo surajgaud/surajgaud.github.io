@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An RTS-AI coach for Age of Empires II | Suraj Gaud</title>
+    <meta name="description" content="Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.">
+    <link rel="canonical" href="https://surajgaud.github.io/essays/eval_driven_development_for_aoe2_copilot.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Suraj Gaud">
+    <meta property="og:title" content="An RTS-AI coach for Age of Empires II | Suraj Gaud">
+    <meta property="og:description" content="Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.">
+    <meta property="og:url" content="https://surajgaud.github.io/essays/eval_driven_development_for_aoe2_copilot.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@surajgaud_">
+    <meta name="twitter:title" content="An RTS-AI coach for Age of Empires II | Suraj Gaud">
+    <meta name="twitter:description" content="Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"An RTS-AI coach for Age of Empires II","description":"Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.","url":"https://surajgaud.github.io/essays/eval_driven_development_for_aoe2_copilot.html","datePublished":"2026-07-01","dateModified":"2026-07-01","author":{"@type":"Person","name":"Suraj Gaud","url":"https://surajgaud.github.io/#person"},"publisher":{"@type":"Person","name":"Suraj Gaud"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://surajgaud.github.io/essays/eval_driven_development_for_aoe2_copilot.html"}}</script>
+    <style>
+        .article-shell { max-width: 720px; margin: 0 auto; padding: 130px 28px 40px; position: relative; z-index: 1; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--text-2); text-decoration: none; margin-bottom: 40px;
+            padding: 8px 16px 8px 12px; border: 1px solid var(--border); border-radius: 100px;
+            transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease), gap 0.2s;
+        }
+        .back-link:hover { color: var(--terracotta); border-color: var(--terracotta); gap: 12px; }
+
+        .article-meta {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-3); margin-bottom: 22px;
+        }
+        .article-meta span { white-space: nowrap; }
+        .article-meta .tag { color: var(--terracotta); }
+
+        .blog-post h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em;
+            line-height: 1.08; color: var(--text); margin-bottom: 40px; text-wrap: balance;
+        }
+        .blog-post h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -0.02em;
+            color: var(--text); margin: 3rem 0 1.2rem; line-height: 1.2;
+        }
+        .blog-post h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 600; color: var(--text); margin: 2.2rem 0 1rem;
+        }
+        .blog-post p { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 1.5rem; }
+        .blog-post strong { color: var(--text); font-weight: 600; }
+        .blog-post em { font-style: italic; }
+        .blog-post a {
+            color: var(--text); text-decoration: none;
+            background-image: linear-gradient(var(--terracotta), var(--terracotta));
+            background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
+            transition: background-size 0.3s var(--ease), color 0.2s;
+        }
+        .blog-post a:hover { color: var(--terracotta); background-size: 100% 100%; }
+        .blog-post ul, .blog-post ol { margin: 0 0 1.5rem 1.4rem; }
+        .blog-post li { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 0.6rem; }
+        .blog-post li::marker { color: var(--terracotta); }
+        .blog-post blockquote {
+            border-left: 2px solid var(--terracotta); padding: 4px 0 4px 24px; margin: 2rem 0;
+            font-family: var(--font-display); font-size: 1.3rem; font-style: normal; font-weight: 500;
+            color: var(--text); line-height: 1.5;
+        }
+        .blog-post hr { border: 0; height: 1px; background: var(--border); margin: 3rem 0; }
+        .blog-post code {
+            background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
+            font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
+        }
+        .blog-post pre {
+            background: var(--bg-2); border: 1px solid var(--border-2);
+            padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+        }
+        .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
+
+        .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-2); }
+    </style>
+</head>
+
+<body>
+    <div class="bg-base" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true">
+        <div class="wash"></div>
+        <div class="wash two"></div>
+        <div class="wash three"></div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="../index.html" class="brand">
+            <span class="brand-text-wrapper">
+                <span class="brand-text-primary">Suraj Gaud</span>
+                <span class="brand-text-secondary">सूरज गौड़</span>
+            </span><span class="dot">.</span>
+        </a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#writing" class="nav-link">Writing</a>
+                <a href="../index.html#now" class="nav-link">Now</a>
+            </div>
+            <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                <i class="fa-solid fa-sun sun"></i>
+                <i class="fa-solid fa-moon moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="article-shell">
+        <a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a>
+        <article class="blog-post">
+            <div class="article-meta"><span class="tag">Essay</span><span>July 2026</span><span>· 9 min read</span></div>
+            <h1>An RTS-AI coach for Age of Empires II</h1>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin:0 0 34px;">
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Eval-Driven Development</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Real-Time AI</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Token Optimization</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Prompt Caching</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">LLM-as-Judge</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">OCR Pipeline</span>
+</div>
+
+<p>I wanted to use AI for a domain where reality changes every few seconds. Most useful LLM applications today are post-processing: summarize the meeting after it happened, review the code after it&#39;s written, analyze the match after it&#39;s over. The model gets full context, thinks as long as it needs, and nobody is blocked waiting. Real-time play is the opposite. In a ranked game of Age of Empires II you make an economy decision roughly every ten seconds, and advice that arrives thirty seconds late describes a game that no longer exists.</p>
+<p>So I built a copilot for AoE2. I think gaming copilots come next after coding copilots — packaged and sold as DLC. This one is deliberately lean. It watches a few zones of your screen, like the HUD, reads the numbers while you play, and talks back through text-to-speech, like a coach sitting behind you. &quot;500 food banked, click Feudal Age now.&quot;</p>
+<p>The goal is to take any beginner and supercharge them to 800-1000 ELO. The bet behind it: what separates a beginner from a decent ranked player is not game knowledge, it is execution. Villager production stops. Resources pile up unspent. The age-up click comes two minutes late. Better players simply don&#39;t do these things. A copilot that keeps you honest about them, calls a civilization-specific build order on time, and layers civ-specific micro optimizations on top is worth hundreds of ELO before any deep strategy enters the picture.</p>
+<p>Two decisions made this work, and they are what this post is really about: the system is cheap on purpose, and it is tested with evals because TDD structurally cannot test it.</p>
+<h2>The constraint that shaped everything</h2>
+<p>This has to run for a full match, up to an hour or more, react within seconds, and not cost real money per game. That rules out the obvious design of &quot;send a screenshot to a vision model every few seconds.&quot; It&#39;s too slow, and at one call every five seconds, a single match racks up hundreds of large-context calls.</p>
+<p>The design that falls out has three stages. Screen capture and OCR turn pixels into a handful of integers: food, wood, gold, stone, current age, the match clock. Plain code turns those integers into facts: gather rates per minute, whether you can afford the next age, whether a resource has been sitting unspent for twenty seconds. Only then does anything decide what to say, and the thing deciding is usually not an LLM.</p>
+<div style="overflow-x:auto; margin: 8px 0 24px;">
+  <img src="https://surajgaud.github.io/data/coaching-pipeline.svg" alt="Pipeline: screen to OCR to metrics, then a fast free alarm channel and a sparse LLM advisor channel, both feeding voice output" style="max-width: 100%; height: auto;">
+</div>
+
+<p>The split mirrors how a human coach works. Half of coaching is reflexes. The moment 500 food is banked and you haven&#39;t clicked up, say so. There is no judgment in that sentence, it is a threshold check, so it runs as a threshold check: a rules engine over the metrics, firing in the same two-second tick that noticed the condition, costing nothing. The other half is judgment. You are floating wood because your army just died and your building queue emptied, so what is the right next investment given your civilization and your opponent&#39;s? That is where the model earns its place, on a relaxed cadence where a few seconds of latency doesn&#39;t matter.</p>
+<p>The two channels have a contract. Alarms always speak first, and the LLM yields the mic for ten seconds after any alarm, so you are never talked over during a time-critical callout. The LLM&#39;s prompt includes the last few things the alarms said, so it never repeats what you just heard.</p>
+<h2>Being cheap on purpose</h2>
+<p>Token efficiency was not an optimization pass at the end. It is most of the architecture, and it is why this ships as something people leave running every match, not a demo they try once.</p>
+<p>The deterministic channel handles the majority of spoken output, every build-order step, every age-up call, every float nag, at exactly zero tokens. During the scripted opening, roughly the first twelve minutes, the LLM is not called at all: the build order is fully known, so there is nothing for a model to decide. After that, the LLM channel is capped at one call per 30 seconds, and it skips the call entirely when the economy has barely moved since last time, which covers long stretches of turtling and fighting.</p>
+<div style="overflow-x:auto; margin: 8px 0 24px;">
+  <img src="https://surajgaud.github.io/data/one-hour-timeline.svg" alt="Timeline of one hour of coaching: many free alarm callouts, few LLM calls, none during the scripted opening" style="max-width: 100%; height: auto;">
+</div>
+
+<p>When a call does happen, it stays small. The system prompt and civilization knowledge are byte-identical between calls, so they sit in the provider&#39;s prompt cache and cost a tenth of normal price after the first call. The variable part is a compact block of precomputed facts plus three sampled snapshots, and the reply is capped at 120 tokens, because two spoken sentences is the product. The model never does arithmetic on raw data; the code already did it. That is what lets the whole thing run on the smallest, fastest model in the lineup and still sound sharp.</p>
+<p>This is the general pattern I would sell to anyone building real-time AI: spend the model only where judgment lives. Everything below judgment is sensors and reflexes, and reflexes should be code.</p>
+<h2>Why TDD couldn&#39;t get me there, and what did</h2>
+<p>This is the part I most wanted to write about. The two failure modes that actually break this product are &quot;the OCR read 1080 as 1030&quot; and &quot;the advice was grammatical but strategically useless.&quot; Neither has an assertable expected value. I cannot write <code>assert advice == &quot;add two stables&quot;</code>, because there are five defensible instructions in any game state. I cannot unit-test OCR against a screenshot I haven&#39;t captured yet, on a HUD layout I haven&#39;t seen. Test-driven development assumes you can specify the correct output before writing the code. For both of these failure modes, that specification does not exist.</p>
+<p>Eval-driven development replaces the assertion with a measurement. The foundation is a session recorder: it captures every raw frame of a real match to disk, along with what the pipeline read from that frame at the time. A recorded session is a replayable artifact. You can re-run the entire vision pipeline over it offline, no game running, and diff the fresh readings against what was captured live.</p>
+<pre><code>data/sessions/20260701-174228/
+├─ manifest.json    # per-cycle readings, phase, timings
+└─ frames/          # raw full-monitor captures, one per cycle
+</code></pre>
+<p>On top of that artifact, each layer gets the cheapest form of testing that can actually catch its failures:</p>
+<ol>
+<li>Metrics and alarms are pure functions and rules, so they get ordinary unit tests: 29 of them, running in a hundredth of a second on every commit. This is the part of the system where TDD works fine, and the architecture deliberately pushed as much behavior as possible into it.</li>
+<li>OCR gets golden frames: hand-verified readings from recorded sessions, asserted per-commit. Hand-verified matters. If you only assert &quot;replay matches recording,&quot; a systematic OCR bug passes by agreeing with itself.</li>
+<li>Advice gets an LLM judge, run nightly rather than per-commit because it costs money and is not deterministic: recorded game timelines go through the advisor, and a judge model scores the output against a small human-rated set, tracking cost and latency alongside quality.</li>
+</ol>
+<div style="overflow-x:auto; margin: 8px 0 24px;">
+<div style="min-width:720px; background:#211b13; border:1px solid #4a3f2a; border-radius:12px; padding:22px 24px; font-family:ui-monospace,'SF Mono',Menlo,monospace;">
+  <div style="font-family:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif; font-size:15px; letter-spacing:4px; text-transform:uppercase; color:#d4a017; padding-bottom:12px; border-bottom:1px solid #4a3f2a;">The Testing Ladder</div>
+  <table style="border-collapse:collapse; width:100%; font-size:12.5px; color:#e9dcbe;">
+    <tr style="text-align:left; color:#a4936f; font-size:11px; letter-spacing:1px; text-transform:uppercase;">
+      <th style="padding:12px 12px 8px 0; font-weight:normal;">layer</th>
+      <th style="padding:12px 12px 8px 0; font-weight:normal;">failure it catches</th>
+      <th style="padding:12px 12px 8px 0; font-weight:normal;">test form</th>
+      <th style="padding:12px 0 8px 0; font-weight:normal;">gate</th>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">metrics + alarms</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122; color:#a4936f;">wrong fact, missed callout</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">unit tests</td>
+      <td style="padding:10px 0; border-top:1px solid #3a3122;"><span style="background:#3a3122; color:#f0c75e; border-radius:4px; padding:2px 8px; font-size:11px;">every commit</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">OCR + anchoring</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122; color:#a4936f;">misread digits, drifted coordinates</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">golden frames from recorded sessions</td>
+      <td style="padding:10px 0; border-top:1px solid #3a3122;"><span style="background:#3a3122; color:#f0c75e; border-radius:4px; padding:2px 8px; font-size:11px;">every commit</span></td>
+    </tr>
+    <tr>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">advice (LLM)</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122; color:#a4936f;">useless or repetitive coaching</td>
+      <td style="padding:10px 12px 10px 0; border-top:1px solid #3a3122;">LLM judge vs human-rated set</td>
+      <td style="padding:10px 0; border-top:1px solid #3a3122;"><span style="background:#26313d; color:#8fbde6; border-radius:4px; padding:2px 8px; font-size:11px;">nightly</span></td>
+    </tr>
+  </table>
+</div>
+</div>
+
+<p>The recorder also changed how the product feels to build. Iterating on a prompt used to mean launching a match and playing badly on purpose. Now a recorded session replays into the live pipeline and drives the whole advice-and-voice loop from my desk, no game running.</p>
+<h2>Where it goes</h2>
+<p>The system currently coaches six civilizations with hand-tuned build orders, and you can tell it your opponent&#39;s civilization at match start. It knows what a Briton player is going to do to you and which of their weaknesses to lean on. The honest gaps: golden frames exist as a plan and a recorder, not yet as a committed fixture set, and the advice judge is still scaffolding. Both sit on top of the session format that is already recording matches today.</p>
+<p>If you take one thing from this post, take the altitude rule. Put the model exactly where judgment lives, and nowhere else. Below it, deterministic code that reads sensors and fires reflexes, testable the boring way. Above it, an eval harness built on recorded reality, because that is the only way to know whether the judgment is any good.</p>
+<p>You can try out this copilot here: <a href="https://github.com/surajgaud/aoe2_copilot">https://github.com/surajgaud/aoe2_copilot</a> </p>
+
+            <div class="article-foot"><a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a></div>
+        </article>
+    </main>
+
+    <script>
+        const root = document.documentElement;
+        const stored = localStorage.getItem('sg-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('sg-theme', next);
+        });
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => brandWrapper.classList.toggle('show-hindi'), 4000);
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('tucked', window.scrollY > 20), { passive: true });
+    </script>
+</body>
+
+</html>

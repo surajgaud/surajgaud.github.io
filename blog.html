@@ -5,7 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Blog | Suraj Gaud</title>
-    <meta name="description" content="Essays by Suraj Gaud.">
+    <meta id="meta-description" name="description" content="Essays by Suraj Gaud on AI infrastructure, eval-driven development, and distributed systems.">
+    <link id="meta-canonical" rel="canonical" href="https://surajgaud.github.io/blog.html">
+    <meta id="meta-og-type" property="og:type" content="article">
+    <meta id="meta-og-title" property="og:title" content="Blog | Suraj Gaud">
+    <meta id="meta-og-description" property="og:description" content="Essays by Suraj Gaud on AI infrastructure, eval-driven development, and distributed systems.">
+    <meta id="meta-og-url" property="og:url" content="https://surajgaud.github.io/blog.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@surajgaud_">
+    <meta id="meta-twitter-title" name="twitter:title" content="Blog | Suraj Gaud">
+    <meta id="meta-twitter-description" name="twitter:description" content="Essays by Suraj Gaud on AI infrastructure, eval-driven development, and distributed systems.">
+    <script id="ld-blogposting" type="application/ld+json"></script>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -138,8 +148,14 @@
         /* Render post */
         const mdFile = new URLSearchParams(window.location.search).get('post');
         const META = {
-            'data/eval_driven_development_for_aoe2_copilot.md': { tag: 'Essay', date: 'July 2026', read: '6 min read' },
-            'data/the_philosophy_of_the_permeable_mind.md': { tag: 'Essay', date: 'June 2026', read: '6 min read' }
+            'data/eval_driven_development_for_aoe2_copilot.md': {
+                tag: 'Essay', date: 'July 2026', iso: '2026-07-01', read: '9 min read',
+                desc: "Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't."
+            },
+            'data/the_philosophy_of_the_permeable_mind.md': {
+                tag: 'Essay', date: 'June 2026', iso: '2026-06-01', read: '2 min read',
+                desc: 'On treating LLMs not as isolated chatbots but as a cognitive layer over our data: MCP, RAG, and designing the silent weaver.'
+            }
         };
         if (!mdFile) {
             document.getElementById('blog-content').innerHTML =
@@ -171,7 +187,34 @@
                 if (idx > -1) { title = lines[idx].replace(/^#\s+/, '').trim(); lines.splice(idx, 1); }
                 const body = marked.parse(lines.join('\n'));
                 const m = META[filePath] || { tag: 'Essay', date: '', read: '' };
-                if (title) document.getElementById('page-title').textContent = title + ' | Suraj Gaud';
+                // Canonicalize onto the pre-rendered static page (essays/<slug>.html), which ships
+                // real markup for crawlers that don't execute JS. blog.html itself keeps working
+                // for direct/bookmarked visits, it just isn't the URL search engines should index.
+                const slug = filePath.replace(/^data\//, '').replace(/\.md$/, '');
+                const pageUrl = window.location.origin + '/essays/' + slug + '.html';
+                if (title) {
+                    document.getElementById('page-title').textContent = title + ' | Suraj Gaud';
+                    const desc = m.desc || (title + ' — an essay by Suraj Gaud.');
+                    document.getElementById('meta-description').setAttribute('content', desc);
+                    document.getElementById('meta-canonical').setAttribute('href', pageUrl);
+                    document.getElementById('meta-og-title').setAttribute('content', title + ' | Suraj Gaud');
+                    document.getElementById('meta-og-description').setAttribute('content', desc);
+                    document.getElementById('meta-og-url').setAttribute('content', pageUrl);
+                    document.getElementById('meta-twitter-title').setAttribute('content', title + ' | Suraj Gaud');
+                    document.getElementById('meta-twitter-description').setAttribute('content', desc);
+                    document.getElementById('ld-blogposting').textContent = JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'BlogPosting',
+                        headline: title,
+                        description: desc,
+                        url: pageUrl,
+                        datePublished: m.iso || undefined,
+                        dateModified: m.iso || undefined,
+                        author: { '@type': 'Person', name: 'Suraj Gaud', url: 'https://surajgaud.github.io/#person' },
+                        publisher: { '@type': 'Person', name: 'Suraj Gaud' },
+                        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl }
+                    });
+                }
                 document.getElementById('blog-content').innerHTML =
                     '<div class="article-meta"><span class="tag">' + m.tag + '</span>' +
                     (m.date ? '<span>' + m.date + '</span>' : '') +

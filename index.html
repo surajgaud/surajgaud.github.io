@@ -5,9 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suraj Gaud · Senior Software &amp; Data Platform Engineer</title>
-    <meta name="description" content="SG building next gen data platforms for AI and ML.">
+    <meta name="description"
+        content="Suraj Gaud is a Senior Software &amp; Data Platform Engineer at Adobe Express, building AI-first data platforms, ML inferencing APIs, and semantic search systems. Essays on eval-driven development, LLM infrastructure, and distributed systems.">
+    <link rel="canonical" href="https://surajgaud.github.io/">
+
+    <!-- Open Graph / social + AI-crawler preview -->
+    <meta property="og:type" content="profile">
+    <meta property="og:site_name" content="Suraj Gaud">
+    <meta property="og:title" content="Suraj Gaud · Senior Software &amp; Data Platform Engineer">
+    <meta property="og:description"
+        content="Building AI-first data platforms, ML inferencing APIs, and semantic search at Adobe Express. Essays on eval-driven development, LLM infrastructure, and distributed systems.">
+    <meta property="og:url" content="https://surajgaud.github.io/">
+    <meta property="profile:first_name" content="Suraj">
+    <meta property="profile:last_name" content="Gaud">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@surajgaud_">
+    <meta name="twitter:title" content="Suraj Gaud · Senior Software &amp; Data Platform Engineer">
+    <meta name="twitter:description"
+        content="Building AI-first data platforms, ML inferencing APIs, and semantic search at Adobe Express.">
+
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- JSON-LD: Person / ProfilePage — see Task 2 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "dateCreated": "2026-01-01",
+        "dateModified": "2026-07-09",
+        "mainEntity": {
+            "@type": "Person",
+            "@id": "https://surajgaud.github.io/#person",
+            "name": "Suraj Gaud",
+            "alternateName": "सूरज गौड़",
+            "url": "https://surajgaud.github.io/",
+            "email": "mailto:suraj.ug@gmail.com",
+            "jobTitle": "Senior Software & Data Platform Engineer",
+            "description": "Suraj Gaud builds AI-first data platforms, ML inferencing APIs, semantic search, and the SDKs/client libraries that keep data collection consistent across large-scale TypeScript codebases.",
+            "worksFor": {
+                "@type": "Organization",
+                "name": "Adobe",
+                "url": "https://www.adobe.com/"
+            },
+            "knowsAbout": [
+                "ML Infrastructure",
+                "Semantic Search & RAG",
+                "Multi-Agent Orchestration & LLM Routing",
+                "Harness and Loop Engineering",
+                "Eval-Driven Development",
+                "Distributed Systems",
+                "Kubernetes & Containers",
+                "SDKs & Client Libraries",
+                "Developer Tooling",
+                "Data Quality & Observability",
+                "Infrastructure as Code"
+            ],
+            "sameAs": [
+                "https://www.linkedin.com/in/surajgaud/",
+                "https://www.twitter.com/surajgaud_",
+                "https://github.com/surajgaud",
+                "https://www.instagram.com/surajgaud/"
+            ]
+        }
+    }
+    </script>
 </head>
 
 <body data-hero="2">
@@ -52,6 +114,7 @@
                     <div class="watermark" aria-hidden="true">सूरज</div>
 
                     <div class="hero2-main">
+                        <h1 class="sr-only">Suraj Gaud — Senior Software &amp; Data Platform Engineer at Adobe Express</h1>
                         <p class="signature reveal d1">
                             <span class="sig-name">Suraj Gaud</span>
                             <span class="sig-sep" aria-hidden="true"></span>
@@ -119,24 +182,24 @@
                     <h2>Writing<span class="accent">.</span></h2>
                 </div>
                 <div class="post-list" id="postList">
-                    <a href="blog.html?post=data/eval_driven_development_for_aoe2_copilot.md" class="post reveal d1">
+                    <a href="essays/eval_driven_development_for_aoe2_copilot.html" class="post reveal d1">
                         <div class="post-main">
                             <div class="post-meta">
                                 <span class="post-tag">Essay</span>
                                 <span>July 2026</span>
-                                <span>· 6 min</span>
+                                <span>· 9 min</span>
                             </div>
                             <h3>An RTS-AI coach for Age of Empires II</h3>
                             <p class="excerpt">Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.</p>
                         </div>
                         <span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                     </a>
-                    <a href="blog.html?post=data/the_philosophy_of_the_permeable_mind.md" class="post reveal d2">
+                    <a href="essays/the_philosophy_of_the_permeable_mind.html" class="post reveal d2">
                         <div class="post-main">
                             <div class="post-meta">
                                 <span class="post-tag">Essay</span>
-                                <span>December 2025</span>
-                                <span>· 6 min</span>
+                                <span>June 2026</span>
+                                <span>· 2 min</span>
                             </div>
                             <h3>The Philosophy of the "Permeable Mind"</h3>
                             <p class="excerpt">On treating LLMs not as isolated chatbots but as a cognitive layer over our data: MCP, RAG, and designing the silent weaver.</p>
@@ -274,8 +337,12 @@
 
         const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-        // Resolve "blog.html?post=data/foo.md" → "data/foo.md" (internal posts only)
+        // Resolve a writing-list URL to its source markdown (for read-time estimation).
+        // "essays/foo.html" -> "data/foo.md" (essay slug == md filename stem, see scripts/build-essays.js)
+        // "blog.html?post=data/foo.md" -> "data/foo.md" (legacy fallback links)
         function postPath(url) {
+            const essayMatch = url.match(/^essays\/([^/?#]+)\.html$/);
+            if (essayMatch) return `data/${essayMatch[1]}.md`;
             const i = url.indexOf('?post=');
             if (i < 0) return null;
             const p = decodeURIComponent(url.slice(i + 6).split('&')[0]);

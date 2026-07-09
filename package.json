@@ -1,0 +1,11 @@
+{
+  "name": "surajgaud.github.io",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-essays.js"
+  },
+  "devDependencies": {
+    "marked": "^12.0.2"
+  }
+}
