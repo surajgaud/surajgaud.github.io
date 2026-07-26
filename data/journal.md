@@ -1,3 +1,9 @@
+# August 2026
+
+## Writing
+
+- [Distilling session data into figments](essays/distilling_session_data_into_figments.html) | Blog | Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.
+
 # July 2026 
 
 ## Writing

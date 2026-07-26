@@ -21,6 +21,10 @@ const SITE_URL = 'https://surajgaud.github.io';
 // Manually curated per-essay metadata (mirrors blog.html's META object —
 // dates/descriptions aren't reliably derivable from the markdown alone).
 const META = {
+    'distilling_session_data_into_figments.md': {
+        tag: 'Essay', date: 'August 2026', iso: '2026-08-02',
+        desc: "Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session."
+    },
     'eval_driven_development_for_aoe2_copilot.md': {
         tag: 'Essay', date: 'July 2026', iso: '2026-07-01',
         desc: "Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't."

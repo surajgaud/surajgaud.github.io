@@ -8,6 +8,7 @@ Core engineering interests: ML infrastructure, semantic search & RAG, multi-agen
 
 ## Essays
 
+- [Distilling session data into figments](https://surajgaud.github.io/data/distilling_session_data_into_figments.md): Coding sessions end and the reasoning dies with the transcript. Figment is a small harvester that distills each Claude Code session into decisions, rejected alternatives, and open threads, then injects recent ones into the next session in the same project. Covers session hooks, at-least-once harvesting with a queue, and keeping memory systems boring on purpose.
 - [An RTS-AI coach for Age of Empires II](https://surajgaud.github.io/data/eval_driven_development_for_aoe2_copilot.md): Building a real-time AoE2 copilot — spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't. Covers token/cost optimization, prompt caching, and LLM-as-judge evaluation for real-time AI systems.
 - [The Philosophy of the "Permeable Mind"](https://surajgaud.github.io/data/the_philosophy_of_the_permeable_mind.md): On treating LLMs not as isolated chatbots but as a cognitive layer over data — MCP as the standard socket for tool connection, RAG as curated context rather than search, and designing AI systems as a "silent weaver" that disappears into the workflow.
 
