@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distilling session data into figments | Suraj Gaud</title>
+    <meta name="description" content="Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.">
+    <link rel="canonical" href="https://surajgaud.github.io/essays/distilling_session_data_into_figments.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Suraj Gaud">
+    <meta property="og:title" content="Distilling session data into figments | Suraj Gaud">
+    <meta property="og:description" content="Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.">
+    <meta property="og:url" content="https://surajgaud.github.io/essays/distilling_session_data_into_figments.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@surajgaud_">
+    <meta name="twitter:title" content="Distilling session data into figments | Suraj Gaud">
+    <meta name="twitter:description" content="Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Distilling session data into figments","description":"Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.","url":"https://surajgaud.github.io/essays/distilling_session_data_into_figments.html","datePublished":"2026-08-02","dateModified":"2026-08-02","author":{"@type":"Person","name":"Suraj Gaud","url":"https://surajgaud.github.io/#person"},"publisher":{"@type":"Person","name":"Suraj Gaud"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://surajgaud.github.io/essays/distilling_session_data_into_figments.html"}}</script>
+    <style>
+        .article-shell { max-width: 720px; margin: 0 auto; padding: 130px 28px 40px; position: relative; z-index: 1; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--text-2); text-decoration: none; margin-bottom: 40px;
+            padding: 8px 16px 8px 12px; border: 1px solid var(--border); border-radius: 100px;
+            transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease), gap 0.2s;
+        }
+        .back-link:hover { color: var(--terracotta); border-color: var(--terracotta); gap: 12px; }
+
+        .article-meta {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-3); margin-bottom: 22px;
+        }
+        .article-meta span { white-space: nowrap; }
+        .article-meta .tag { color: var(--terracotta); }
+
+        .blog-post h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em;
+            line-height: 1.08; color: var(--text); margin-bottom: 40px; text-wrap: balance;
+        }
+        .blog-post h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -0.02em;
+            color: var(--text); margin: 3rem 0 1.2rem; line-height: 1.2;
+        }
+        .blog-post h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 600; color: var(--text); margin: 2.2rem 0 1rem;
+        }
+        .blog-post p { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 1.5rem; }
+        .blog-post strong { color: var(--text); font-weight: 600; }
+        .blog-post em { font-style: italic; }
+        .blog-post a {
+            color: var(--text); text-decoration: none;
+            background-image: linear-gradient(var(--terracotta), var(--terracotta));
+            background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
+            transition: background-size 0.3s var(--ease), color 0.2s;
+        }
+        .blog-post a:hover { color: var(--terracotta); background-size: 100% 100%; }
+        .blog-post ul, .blog-post ol { margin: 0 0 1.5rem 1.4rem; }
+        .blog-post li { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 0.6rem; }
+        .blog-post li::marker { color: var(--terracotta); }
+        .blog-post blockquote {
+            border-left: 2px solid var(--terracotta); padding: 4px 0 4px 24px; margin: 2rem 0;
+            font-family: var(--font-display); font-size: 1.3rem; font-style: normal; font-weight: 500;
+            color: var(--text); line-height: 1.5;
+        }
+        .blog-post hr { border: 0; height: 1px; background: var(--border); margin: 3rem 0; }
+        .blog-post code {
+            background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
+            font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
+        }
+        .blog-post pre {
+            background: var(--bg-2); border: 1px solid var(--border-2);
+            padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+        }
+        .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
+
+        .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-2); }
+    </style>
+</head>
+
+<body>
+    <div class="bg-base" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true">
+        <div class="wash"></div>
+        <div class="wash two"></div>
+        <div class="wash three"></div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="../index.html" class="brand">
+            <span class="brand-text-wrapper">
+                <span class="brand-text-primary">Suraj Gaud</span>
+                <span class="brand-text-secondary">सूरज गौड़</span>
+            </span><span class="dot">.</span>
+        </a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#writing" class="nav-link">Writing</a>
+                <a href="../index.html#now" class="nav-link">Now</a>
+            </div>
+            <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                <i class="fa-solid fa-sun sun"></i>
+                <i class="fa-solid fa-moon moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="article-shell">
+        <a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a>
+        <article class="blog-post">
+            <div class="article-meta"><span class="tag">Essay</span><span>August 2026</span><span>· 5 min read</span></div>
+            <h1>Distilling session data into figments</h1>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin:0 0 34px;">
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Context Engineering</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Session Memory</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Claude Code Hooks</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Small Models</span>
+</div>
+
+<p>Every long session with a coding agent ends the same way: the code survives, the reasoning dies. Git records what changed. CLAUDE.md holds the standing rules. The transcript is the only artifact that records why: which decisions were made, which alternatives were rejected, what was left unverified when the window closed. And it sits in a JSONL file on a thirty-day cleanup timer.</p>
+<p>The existing tools reach for this data at the wrong altitude. Claude Code&#39;s built-in /insights aggregates transcripts into a usage report; I ran it and it wasn&#39;t useful at all, because aggregation averages away the specifics. Built-in memory saves what seemed notable mid-task, and mid-task nobody knows which decisions will survive the session. Embedding search over conversation history optimizes retrieval when the bottleneck is capture.</p>
+<p>The capture point that works is session end: the moment a decision is cheapest to record and most expensive to reconstruct later. The full conversation is on disk, nothing more will change, and distillation costs one call to a small model. A week later the same reconstruction is archaeology.</p>
+<p>So, figment: a harvester that distills each Claude Code session into a small markdown file the moment it ends, and feeds recent ones back into the next session in the same project. A figment of the session: the session is gone, this is what remains.</p>
+<h2>What a figment is</h2>
+<p>Five sections, under 45 lines, grounded only in the transcript:</p>
+<ul>
+<li><strong>Did</strong>: what was accomplished, concretely</li>
+<li><strong>Decisions</strong>: each one with the rejected alternative, and why</li>
+<li><strong>Standouts</strong>: bugs with root causes, surprises, corrections I made to the agent</li>
+<li><strong>Dropped</strong>: approaches explicitly abandoned</li>
+<li><strong>Open threads</strong>: work left mid-flight or unverified</li>
+</ul>
+<p>Decisions carry the weight: git shows the path taken, a figment also keeps the road not taken and why. From a real one, on an ESP32 display project: touch input is polled by apps rather than pushed to them, so apps that never use touch never pay for reading the touch controller. The commit shows the polling API; the figment is the only place the &quot;why&quot; survives.</p>
+<p>Open threads matter because sessions rarely end clean. The same figment ends with: calibration values are a guess until pressed on the real panel, and colors may render byte-swapped on the device. That list is where the next session starts, and before this it lived nowhere.</p>
+<h2>The architecture is a corollary</h2>
+<p>If session end is the capture point, the design falls out. Session end is also when laptops shut and APIs flake, so the SessionEnd hook does the one thing that can&#39;t fail: append a line to a queue file. The next session drains the queue in the background, with a retry counter and a dead-letter file after five failures. A figment shows up one session late, which costs nothing, because the next session is the consumer.</p>
+<pre><code>SessionEnd   -&gt; enqueue   append the session to a queue file
+SessionStart -&gt; inject    last 3 figments for this project into context
+             -&gt; sweep     background: transcript -&gt; Haiku -&gt; figment file
+</code></pre>
+<p>Sessions under ten real messages are gated out. The summarizer is Haiku: grounded distillation is not judgment work, and a full harvest costs pennies. Subagent chatter is dropped, tool output truncated, and long sessions keep the tail, because the end of a session is where the decisions land.</p>
+<h2>It paid for itself on this post</h2>
+<p>The session that wrote this article started with two figments of this site injected. The agent already knew that publishing here means registering the post in two META blocks and updating the journal file, and that last time the forgotten journal entry was the actual blocker. Nobody searched for that.</p>
+<h2>What broke immediately</h2>
+<p>Backfilling old transcripts produced one instructive failure. On a 309-message session, Haiku joined the conversation instead of summarizing it, replying to the last message as if it were the assistant. Two causes: truncation kept the head of the transcript instead of the tail, so the model saw a conversation trailing into a live request, and nothing validated the output before writing it. Both fixed the boring way: keep the tail, reject output that doesn&#39;t start with <code>## Did</code>, let the retry machinery handle it. A summarizer is a system boundary, and its output is untrusted input.</p>
+<h2>Boring on purpose</h2>
+<p>Figment is one Python file, standard library only. The hooks call <code>python3</code> directly, so nothing resolves a virtualenv at session start. No database, no embeddings, no vector store: figments are markdown on disk, greppable, and injection is a capped read of the three newest. A <code>backfill</code> command builds the corpus from existing transcripts, which is also how I validated the prompt before the hooks went live. Claude Code is the only source today; Codex stores sessions as JSONL too, so that&#39;s an adapter on the sweep, not a redesign.</p>
+<p>The kill criterion: if figments don&#39;t visibly change what sessions do within a few weeks, starting from open threads instead of re-deriving context, I delete the harvester. Either way, the transcripts were the only place the reasoning lived. Now some of it survives the window closing.</p>
+
+            <div class="article-foot"><a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a></div>
+        </article>
+    </main>
+
+    <script>
+        const root = document.documentElement;
+        const stored = localStorage.getItem('sg-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('sg-theme', next);
+        });
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => brandWrapper.classList.toggle('show-hindi'), 4000);
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('tucked', window.scrollY > 20), { passive: true });
+    </script>
+</body>
+
+</html>
