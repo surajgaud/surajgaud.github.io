@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var stored = localStorage.getItem('sg-theme');
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+        })();
+    </script>
     <title>Suraj Gaud · Senior Software &amp; Data Platform Engineer</title>
     <meta name="description"
         content="Suraj Gaud is a Senior Software &amp; Data Platform Engineer at Adobe Express, building AI-first data platforms, ML inferencing APIs, and semantic search systems. Essays on eval-driven development, LLM infrastructure, and distributed systems.">
@@ -182,10 +189,34 @@
                     <h2>Writing<span class="accent">.</span></h2>
                 </div>
                 <div class="post-list" id="postList">
-                    <a href="essays/eval_driven_development_for_aoe2_copilot.html" class="post reveal d1">
+                    <a href="essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html" class="post reveal d1">
                         <div class="post-main">
                             <div class="post-meta">
-                                <span class="post-tag">Essay</span>
+                                <span class="post-tag">Blog</span>
+                                <span>November 2026</span>
+                                <span>· 5 min</span>
+                            </div>
+                            <h3>Accelerating UI/UX development with Playwright and Chrome MCP</h3>
+                            <p class="excerpt">Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.</p>
+                        </div>
+                        <span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                    <a href="essays/distilling_session_data_into_figments.html" class="post reveal d2">
+                        <div class="post-main">
+                            <div class="post-meta">
+                                <span class="post-tag">Blog</span>
+                                <span>August 2026</span>
+                                <span>· 5 min</span>
+                            </div>
+                            <h3>Distilling session data into figments</h3>
+                            <p class="excerpt">Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session.</p>
+                        </div>
+                        <span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+                    </a>
+                    <a href="essays/eval_driven_development_for_aoe2_copilot.html" class="post reveal d3">
+                        <div class="post-main">
+                            <div class="post-meta">
+                                <span class="post-tag">Blog</span>
                                 <span>July 2026</span>
                                 <span>· 9 min</span>
                             </div>
@@ -194,10 +225,10 @@
                         </div>
                         <span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span>
                     </a>
-                    <a href="essays/the_philosophy_of_the_permeable_mind.html" class="post reveal d2">
+                    <a href="essays/the_philosophy_of_the_permeable_mind.html" class="post reveal d4">
                         <div class="post-main">
                             <div class="post-meta">
-                                <span class="post-tag">Essay</span>
+                                <span class="post-tag">Blog</span>
                                 <span>June 2026</span>
                                 <span>· 2 min</span>
                             </div>
@@ -337,6 +368,15 @@
 
         const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
+        function essayHref(path) {
+            if (!path || /^[a-z][a-z0-9+.-]*:/i.test(path)) return path;
+            try {
+                return new URL(path, window.location.href).href;
+            } catch {
+                return path;
+            }
+        }
+
         // Resolve a writing-list URL to its source markdown (for read-time estimation).
         // "essays/foo.html" -> "data/foo.md" (essay slug == md filename stem, see scripts/build-essays.js)
         // "blog.html?post=data/foo.md" -> "data/foo.md" (legacy fallback links)
@@ -356,6 +396,13 @@
                 return Math.max(1, Math.round(words / 200));
             } catch { return null; }
         }
+        function fixWritingLinks() {
+            document.querySelectorAll('#postList a.post[href]').forEach(a => {
+                const raw = a.getAttribute('href');
+                if (raw) a.setAttribute('href', essayHref(raw));
+            });
+        }
+
         async function renderWriting(entries) {
             const el = document.getElementById('postList');
             if (!el || !entries.length) return;
@@ -366,13 +413,16 @@
                 const excerpt = e.fields[1] || '';
                 const meta = `<span class="post-tag">${esc(tag)}</span><span>${esc(e.month)}</span>`
                     + (mins ? `<span>· ${mins} min</span>` : '');
-                return `<a href="${esc(e.url)}" class="post reveal d${Math.min(i + 1, 5)}">`
+                const href = essayHref(e.url);
+                if (!href || !e.title) return '';
+                return `<a href="${esc(href)}" class="post reveal d${Math.min(i + 1, 5)}">`
                     + `<div class="post-main"><div class="post-meta">${meta}</div>`
                     + `<h3>${esc(e.title)}</h3>`
                     + (excerpt ? `<p class="excerpt">${esc(excerpt)}</p>` : '')
                     + `</div><span class="post-arrow"><i class="fa-solid fa-arrow-right"></i></span></a>`;
             }));
-            el.innerHTML = cards.join('');
+            el.innerHTML = cards.filter(Boolean).join('');
+            fixWritingLinks();
             initReveals();
         }
 
@@ -423,7 +473,9 @@
 
             setupNowScroll();
             window.addEventListener('resize', setupNowScroll, { passive: true });
+            fixWritingLinks();
         }
+        fixWritingLinks();
         loadNow();
 
         /* ---------- Navbar shadow on scroll ---------- */

@@ -21,6 +21,10 @@ const SITE_URL = 'https://surajgaud.github.io';
 // Manually curated per-essay metadata (mirrors blog.html's META object —
 // dates/descriptions aren't reliably derivable from the markdown alone).
 const META = {
+    'accelerating_ui_ux_with_playwright_and_chrome_mcp.md': {
+        tag: 'Essay', date: 'November 2026', iso: '2026-11-14',
+        desc: "Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit."
+    },
     'distilling_session_data_into_figments.md': {
         tag: 'Essay', date: 'August 2026', iso: '2026-08-02',
         desc: "Coding sessions end and the reasoning dies with the transcript. Figment distills each session into decisions, rejected alternatives, and open threads, then feeds them back to the next session."
@@ -89,6 +93,13 @@ function renderEssay(mdFilename) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var stored = localStorage.getItem('sg-theme');
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+        })();
+    </script>
     <title>${esc(title)} | Suraj Gaud</title>
     <meta name="description" content="${esc(m.desc)}">
     <link rel="canonical" href="${pageUrl}">
@@ -143,6 +154,7 @@ function renderEssay(mdFilename) {
         .blog-post em { font-style: italic; }
         .blog-post a {
             color: var(--text); text-decoration: none;
+            overflow-wrap: anywhere;
             background-image: linear-gradient(var(--terracotta), var(--terracotta));
             background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
             transition: background-size 0.3s var(--ease), color 0.2s;
@@ -161,9 +173,11 @@ function renderEssay(mdFilename) {
             background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
             font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
         }
+        .blog-post p code, .blog-post li code { overflow-wrap: anywhere; }
         .blog-post pre {
             background: var(--bg-2); border: 1px solid var(--border-2);
             padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+            max-width: 100%;
         }
         .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
 

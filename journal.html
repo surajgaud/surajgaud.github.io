@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var stored = localStorage.getItem('sg-theme');
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+        })();
+    </script>
     <title>Journal | Suraj Gaud</title>
     <meta name="description" content="A living log of what Suraj Gaud is reading, listening to, and writing — updated monthly.">
     <link rel="canonical" href="https://surajgaud.github.io/journal.html">
@@ -29,7 +36,7 @@
             <span class="brand-text-wrapper">
                 <span class="brand-text-primary">Suraj Gaud</span>
                 <span class="brand-text-secondary">सूरज गौड़</span>
-            </span><span style="color: var(--accent-1)">.</span>
+            </span><span class="dot">.</span>
         </a>
     </nav>
 
@@ -157,13 +164,26 @@
                             const [_, text, url, metaRaw] = match;
                             // Format: [Title](url) | Tag | Excerpt — journal shows the Tag only
                             const meta = (metaRaw || '').split('|')[0].trim();
+                            const external = /^[a-z][a-z0-9+.-]*:/i.test(url);
                             const li = document.createElement('li');
-                            li.innerHTML = `
-                                <a href="${url}" target="_blank" class="journal-link">
-                                    <span class="link-text">${text}</span>
-                                    ${meta ? `<span class="link-meta">${meta}</span>` : ''}
-                                </a>
-                            `;
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.className = 'journal-link';
+                            if (external) {
+                                a.target = '_blank';
+                                a.rel = 'noopener noreferrer';
+                            }
+                            const label = document.createElement('span');
+                            label.className = 'link-text';
+                            label.textContent = text;
+                            a.appendChild(label);
+                            if (meta) {
+                                const tag = document.createElement('span');
+                                tag.className = 'link-meta';
+                                tag.textContent = meta;
+                                a.appendChild(tag);
+                            }
+                            li.appendChild(a);
                             currentList.appendChild(li);
                         }
                     }

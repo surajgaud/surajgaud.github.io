@@ -7,6 +7,18 @@
         <priority>1.0</priority>
     </url>
     <url>
+        <loc>https://surajgaud.github.io/essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html</loc>
+        <lastmod>2026-11-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://surajgaud.github.io/data/accelerating_ui_ux_with_playwright_and_chrome_mcp.md</loc>
+        <lastmod>2026-11-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://surajgaud.github.io/essays/distilling_session_data_into_figments.html</loc>
         <lastmod>2026-08-02</lastmod>
         <changefreq>monthly</changefreq>

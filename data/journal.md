@@ -1,3 +1,9 @@
+# November 2026
+
+## Writing
+
+- [Accelerating UI/UX development with Playwright and Chrome MCP](essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html) | Blog | Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.
+
 # August 2026
 
 ## Writing

@@ -4,6 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var stored = localStorage.getItem('sg-theme');
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+        })();
+    </script>
     <title>An RTS-AI coach for Age of Empires II | Suraj Gaud</title>
     <meta name="description" content="Building a real-time AoE2 copilot: spend the LLM only where judgment lives, run everything below it as deterministic reflexes, and test the whole thing with eval-driven development because TDD structurally can't.">
     <link rel="canonical" href="https://surajgaud.github.io/essays/eval_driven_development_for_aoe2_copilot.html">
@@ -58,6 +65,7 @@
         .blog-post em { font-style: italic; }
         .blog-post a {
             color: var(--text); text-decoration: none;
+            overflow-wrap: anywhere;
             background-image: linear-gradient(var(--terracotta), var(--terracotta));
             background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
             transition: background-size 0.3s var(--ease), color 0.2s;
@@ -76,9 +84,11 @@
             background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
             font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
         }
+        .blog-post p code, .blog-post li code { overflow-wrap: anywhere; }
         .blog-post pre {
             background: var(--bg-2); border: 1px solid var(--border-2);
             padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+            max-width: 100%;
         }
         .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
 

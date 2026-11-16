@@ -843,6 +843,11 @@ body[data-hero="3"] .hero-v3 { display: block; }
     .hero-v2 .watermark { font-size: 40vw; top: auto; bottom: 6%; opacity: 0.035; }
 }
 
+@media (max-width: 360px) {
+    .social-dock { gap: 4px; padding: 8px 10px; max-width: 100%; }
+    .social-icon { width: 40px; height: 40px; font-size: 1.05rem; }
+}
+
 @media (max-width: 640px) {
     .wrap { padding: 0 20px; }
     .nav-links { display: none; }
