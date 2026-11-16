@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            var stored = localStorage.getItem('sg-theme');
+            var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (dark ? 'dark' : 'light'));
+        })();
+    </script>
+    <title>Accelerating UI/UX development with Playwright and Chrome MCP | Suraj Gaud</title>
+    <meta name="description" content="Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.">
+    <link rel="canonical" href="https://surajgaud.github.io/essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Suraj Gaud">
+    <meta property="og:title" content="Accelerating UI/UX development with Playwright and Chrome MCP | Suraj Gaud">
+    <meta property="og:description" content="Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.">
+    <meta property="og:url" content="https://surajgaud.github.io/essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@surajgaud_">
+    <meta name="twitter:title" content="Accelerating UI/UX development with Playwright and Chrome MCP | Suraj Gaud">
+    <meta name="twitter:description" content="Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Accelerating UI/UX development with Playwright and Chrome MCP","description":"Two MCP servers, two jobs: Chrome DevTools for the live debugging loop, Playwright for the spec in CI — default config, shared browser attach, and what to commit.","url":"https://surajgaud.github.io/essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html","datePublished":"2026-11-14","dateModified":"2026-11-14","author":{"@type":"Person","name":"Suraj Gaud","url":"https://surajgaud.github.io/#person"},"publisher":{"@type":"Person","name":"Suraj Gaud"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://surajgaud.github.io/essays/accelerating_ui_ux_with_playwright_and_chrome_mcp.html"}}</script>
+    <style>
+        .article-shell { max-width: 720px; margin: 0 auto; padding: 130px 28px 40px; position: relative; z-index: 1; }
+
+        .back-link {
+            display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--text-2); text-decoration: none; margin-bottom: 40px;
+            padding: 8px 16px 8px 12px; border: 1px solid var(--border); border-radius: 100px;
+            transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease), gap 0.2s;
+        }
+        .back-link:hover { color: var(--terracotta); border-color: var(--terracotta); gap: 12px; }
+
+        .article-meta {
+            display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+            font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--text-3); margin-bottom: 22px;
+        }
+        .article-meta span { white-space: nowrap; }
+        .article-meta .tag { color: var(--terracotta); }
+
+        .blog-post h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em;
+            line-height: 1.08; color: var(--text); margin-bottom: 40px; text-wrap: balance;
+        }
+        .blog-post h2 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -0.02em;
+            color: var(--text); margin: 3rem 0 1.2rem; line-height: 1.2;
+        }
+        .blog-post h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem; font-weight: 600; color: var(--text); margin: 2.2rem 0 1rem;
+        }
+        .blog-post p { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 1.5rem; }
+        .blog-post strong { color: var(--text); font-weight: 600; }
+        .blog-post em { font-style: italic; }
+        .blog-post a {
+            color: var(--text); text-decoration: none;
+            overflow-wrap: anywhere;
+            background-image: linear-gradient(var(--terracotta), var(--terracotta));
+            background-size: 100% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
+            transition: background-size 0.3s var(--ease), color 0.2s;
+        }
+        .blog-post a:hover { color: var(--terracotta); background-size: 100% 100%; }
+        .blog-post ul, .blog-post ol { margin: 0 0 1.5rem 1.4rem; }
+        .blog-post li { font-size: 1.16rem; line-height: 1.8; color: var(--text-2); margin-bottom: 0.6rem; }
+        .blog-post li::marker { color: var(--terracotta); }
+        .blog-post blockquote {
+            border-left: 2px solid var(--terracotta); padding: 4px 0 4px 24px; margin: 2rem 0;
+            font-family: var(--font-display); font-size: 1.3rem; font-style: normal; font-weight: 500;
+            color: var(--text); line-height: 1.5;
+        }
+        .blog-post hr { border: 0; height: 1px; background: var(--border); margin: 3rem 0; }
+        .blog-post code {
+            background: var(--bg-2); padding: 0.15rem 0.45rem; border-radius: 5px;
+            font-family: var(--font-mono); font-size: 0.86em; color: var(--terracotta);
+        }
+        .blog-post p code, .blog-post li code { overflow-wrap: anywhere; }
+        .blog-post pre {
+            background: var(--bg-2); border: 1px solid var(--border-2);
+            padding: 1.4rem; border-radius: 14px; overflow-x: auto; margin-bottom: 1.5rem;
+            max-width: 100%;
+        }
+        .blog-post pre code { background: none; padding: 0; color: var(--text-2); }
+
+        .article-foot { margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border-2); }
+    </style>
+</head>
+
+<body>
+    <div class="bg-base" aria-hidden="true"></div>
+    <div class="ambient" aria-hidden="true">
+        <div class="wash"></div>
+        <div class="wash two"></div>
+        <div class="wash three"></div>
+    </div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <nav class="navbar" id="navbar">
+        <a href="../index.html" class="brand">
+            <span class="brand-text-wrapper">
+                <span class="brand-text-primary">Suraj Gaud</span>
+                <span class="brand-text-secondary">सूरज गौड़</span>
+            </span><span class="dot">.</span>
+        </a>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="../index.html#about" class="nav-link">About</a>
+                <a href="../index.html#writing" class="nav-link">Writing</a>
+                <a href="../index.html#now" class="nav-link">Now</a>
+            </div>
+            <button class="icon-btn theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">
+                <i class="fa-solid fa-sun sun"></i>
+                <i class="fa-solid fa-moon moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="article-shell">
+        <a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a>
+        <article class="blog-post">
+            <div class="article-meta"><span class="tag">Essay</span><span>November 2026</span><span>· 7 min read</span></div>
+            <h1>Accelerating UI/UX development with Playwright and Chrome MCP</h1>
+            <div style="display:flex; flex-wrap:wrap; gap:8px; margin:0 0 34px;">
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">UI Engineering</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Playwright</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Chrome DevTools MCP</span>
+  <span style="font-family:var(--font-mono); font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-2); border:1px solid var(--border); border-radius:100px; padding:5px 12px;">Network</span>
+</div>
+
+<p>Most UI bugs are not &quot;the component failed to render.&quot; They are a button that stayed disabled, a layout that only breaks at 390px, a toast that never appeared because the API returned an empty body. Fixing that with a coding agent means letting it <em>see</em> the page the way you do in DevTools — tree, styles, console, network — while you are still editing. Separately, you need automation that still passes on the next push. Those are two different outputs: a debugging session, and a Playwright spec.</p>
+<p>I wire both through MCP. <a href="https://github.com/ChromeDevTools/chrome-devtools-mcp">Chrome DevTools MCP</a> owns the session: snapshots, clicks on snapshot uids, CSS on a node, mocked routes. Playwright MCP (and later the normal Playwright test runner) owns what survives the session: <code>getByRole</code>, assertions, <code>page.route</code> in CI. Confusing the two is how you end up committing ephemeral uids or trying to run Chrome MCP in a pipeline. The split is intentional.</p>
+<h2>The loop Chrome MCP assumes</h2>
+<p>The project ships an agent skill for a reason — it describes a loop that matches how DevTools actually works, not &quot;click until something happens.&quot; In full mode (not <code>--slim</code>, which caps you at three tools and is useless for UI), the agent should open or select a page, wait for something stable, take a <strong>snapshot</strong>, then interact using the <strong>uid</strong> from that snapshot. Snapshots carry role, name, and state; they are the right default for logic. Screenshots are for when a human needs to judge alignment, crop, or color — not for deciding whether a control is disabled.</p>
+<p>After the DOM changes, take a new snapshot. Uids go stale. For style questions, <code>get_css_styles</code> on the same uid is the full cascade: winning rules are plain, overridden ones are marked <code>[overloaded]</code>, and <code>var()</code> values come back resolved. Pass <code>pageId</code> on page-scoped tools. On clicks and fills, <code>includeSnapshot: false</code> unless you need the updated tree in that same turn. <code>evaluate_script</code> is only when the tree and the cascade still do not answer the question.</p>
+<p>That loop is the spine of the rest of this post: config gets you a sane browser; the tools below are what you use inside the loop depending on what kind of bug you are chasing.</p>
+<h2>Default config: two servers, two throwaway browsers</h2>
+<p>The simplest setup is two MCP entries, each launching its own headed Chrome with <code>--isolated</code> (a temp profile — no daily cookies, no extensions). That is enough for many tasks. I enable network mocking at the server level so the agent can stand up slow or error responses without a backend, and I turn off memory tooling because heap snapshots do not help with layout or fetch failures.</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;playwright&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [&quot;-y&quot;, &quot;@playwright/mcp@latest&quot;, &quot;--isolated&quot;]
+    },
+    &quot;chrome-devtools&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [
+        &quot;-y&quot;,
+        &quot;chrome-devtools-mcp@latest&quot;,
+        &quot;--isolated&quot;,
+        &quot;--viewport=1280x800&quot;,
+        &quot;--categoryNetworkMocks&quot;,
+        &quot;--categoryMemory=false&quot;,
+        &quot;--screenshotMaxWidth=1280&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+<p><code>--viewport=1280x800</code> is the size when the server launches Chrome — headed, not <code>--headless</code>. <code>--categoryNetworkMocks</code> turns on <code>mock_network</code> and <code>remove_network_mock</code> (off by default in the server). <code>--categoryMemory=false</code> drops heap tools that would otherwise be on by default. <code>--screenshotMaxWidth=1280</code> caps screenshot width because image cost scales with pixels.</p>
+<p>I deliberately leave off <code>--slim</code>, <code>--headless</code>, <code>--experimentalVision</code> (coordinate <code>click_at</code>), and <code>--categoryExtensions</code>. <code>--autoConnect</code> is tempting — it attaches to whatever Chrome you already have open — but Playwright&#39;s MCP cannot be aimed at a URL the same way; if both servers must share one window, you attach both to a Chrome you start yourself (next section).</p>
+<h2>One Chrome, both clients</h2>
+<p>Isolated mode is convenient but duplicates reality: two browsers, two consoles, two network logs. When I want the agent on the <strong>same</strong> tabs and traffic I am looking at, I drop <code>--isolated</code> on both entries and connect to one Chrome over CDP.</p>
+<p>Chrome will not open a debugging port on your normal profile if that profile is already running. Use a separate user-data directory:</p>
+<pre><code>chrome --remote-debugging-port=9222 --user-data-dir=.chrome-mcp
+</code></pre>
+<p><code>http://127.0.0.1:9222/json/version</code> should return a <code>webSocketDebuggerUrl</code>. Both MCP clients accept the HTTP URL and discover the socket. Playwright uses <code>--cdp-endpoint</code>; Chrome DevTools MCP uses <code>--browser-url</code>. Flags like <code>--viewport</code> and <code>--isolated</code> only apply when the <strong>server</strong> launches the browser, so they come off the Chrome entry in attach mode; category flags for mocks and screenshots stay.</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;playwright&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [
+        &quot;-y&quot;,
+        &quot;@playwright/mcp@latest&quot;,
+        &quot;--cdp-endpoint=http://127.0.0.1:9222&quot;
+      ]
+    },
+    &quot;chrome-devtools&quot;: {
+      &quot;command&quot;: &quot;npx&quot;,
+      &quot;args&quot;: [
+        &quot;-y&quot;,
+        &quot;chrome-devtools-mcp@latest&quot;,
+        &quot;--browser-url=http://127.0.0.1:9222&quot;,
+        &quot;--categoryNetworkMocks&quot;,
+        &quot;--categoryMemory=false&quot;,
+        &quot;--screenshotMaxWidth=1280&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+<p><code>list_pages</code> in Chrome MCP and Playwright&#39;s tab list are the same browser. Start the window before the first tool call — in attach mode, Chrome MCP does not launch it for you. Do not let both clients navigate at once. Playwright MCP reads the same accessibility tree as Chrome&#39;s snapshot; that is exactly what becomes <code>getByRole</code> in a committed test. Cross-browser matrix and CI still belong on the Playwright test runner, not on this shared Chrome instance.</p>
+<h2>Inside the loop: three kinds of UI work</h2>
+<p>Once the loop is running, the tooling clusters into three questions. The lists below are not &quot;every tool once&quot; — they are what I reach for when the bug is primarily about structure, experience, or the wire.</p>
+<p><strong>Structure and interaction.</strong> &quot;Can the agent find and operate the control, and is CSS lying?&quot; Navigation and pacing: <code>list_pages</code>, <code>new_page</code>, <code>navigate_page</code>, <code>select_page</code>, <code>wait_for</code>. Then <code>take_snapshot</code>, then <code>click</code>, <code>fill</code>, <code>fill_form</code>, <code>hover</code>, <code>press_key</code>, <code>type_text</code>, <code>handle_dialog</code>, <code>upload_file</code> against the uid. For overrides and specificity, <code>get_css_styles</code> on that uid. <code>take_screenshot</code> with <code>filePath</code> when the question is visual; not for disabled state.</p>
+<p><strong>Experience and environment.</strong> &quot;Does this break on a phone, offline, or with reduced motion?&quot; One <code>emulate</code> call replaces previous emulation (except extra headers), so send the full set: viewport strings like <code>390x844x2,mobile,touch</code>, <code>prefersReducedMotion</code>, <code>colorScheme</code>, <code>forcedColors</code>, <code>prefersContrast</code>, and <code>networkConditions</code> (<code>Offline</code>, <code>Slow 3G</code>, etc.). <code>resize_page</code> when only window size matters. <code>lighthouse_audit</code> for accessibility gaps, not performance scores. Console: <code>list_console_messages</code> and <code>get_console_message</code> (source maps on by default). <code>performance_start_trace</code> / <code>performance_stop_trace</code> only when the question is LCP, INP, or CLS — and not while network mocks are active, because mocks disable the HTTP cache.</p>
+<p><strong>The wire.</strong> &quot;Did the client send what we think, and what if the server misbehaves?&quot; <code>list_network_requests</code> first, with <code>resourceTypes</code> such as <code>fetch</code> or <code>xhr</code> and <code>includePreservedRequests</code> when the last few navigations matter. <code>get_network_request</code> for headers (including cookies) and bodies; large payloads go to <code>requestFilePath</code> / <code>responseFilePath</code>. Set up <code>mock_network</code> <strong>before</strong> navigation — abort, local <code>body</code>, or <code>upstream</code> URL on a <code>route</code> pattern — and <code>remove_network_mock</code> when finished. Keep <code>--redactNetworkHeaders</code> off when the bug is auth; turn it on when the agent should not see cookies.</p>
+<h2>What the session produces</h2>
+<p>Chrome MCP does not run in CI. The session&#39;s job is to establish facts; git&#39;s job is to lock them in.</p>
+<p>Example: the snapshot shows a button named &quot;Save changes&quot; that enables only after the field validates. The network list shows the PUT on save. The Playwright test I commit does not mention uids. It uses <code>getByRole</code>, asserts enabled state after fill, clicks, and checks the request — with <code>page.route</code> if I need a 500 without standing up the API. The uid was for the afternoon. The role and accessible name are the contract.</p>
+<p>If that split stays clear — Chrome MCP while the UI is still moving, Playwright once you know what &quot;done&quot; means — the agent stops guessing at selectors and starts doing the kind of UI work you would have done with DevTools open anyway, with specs that still mean something on Monday.</p>
+
+            <div class="article-foot"><a href="../index.html#writing" class="back-link"><i class="fa-solid fa-arrow-left"></i> All writing</a></div>
+        </article>
+    </main>
+
+    <script>
+        const root = document.documentElement;
+        const stored = localStorage.getItem('sg-theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        root.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            localStorage.setItem('sg-theme', next);
+        });
+        const brandWrapper = document.querySelector('.brand-text-wrapper');
+        setInterval(() => brandWrapper.classList.toggle('show-hindi'), 4000);
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => navbar.classList.toggle('tucked', window.scrollY > 20), { passive: true });
+    </script>
+</body>
+
+</html>
