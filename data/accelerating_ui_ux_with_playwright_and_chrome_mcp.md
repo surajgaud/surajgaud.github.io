@@ -88,6 +88,8 @@ chrome --remote-debugging-port=9222 --user-data-dir=.chrome-mcp
 }
 ```
 
+Tabbit's [Chrome DevTools MCP tutorial](https://go.tabbit.ai/blog/chrome-devtools-mcp-guide#can-it-connect-to-a-running-browser) walks through a failed fetch with the console, network log, and a performance trace, and links here for the shared-Chrome attach.
+
 `list_pages` in Chrome MCP and Playwright's tab list are the same browser. Start the window before the first tool call — in attach mode, Chrome MCP does not launch it for you. Do not let both clients navigate at once. Playwright MCP reads the same accessibility tree as Chrome's snapshot; that is exactly what becomes `getByRole` in a committed test. Cross-browser matrix and CI still belong on the Playwright test runner, not on this shared Chrome instance.
 
 ## Inside the loop: three kinds of UI work
